@@ -1,0 +1,2 @@
+# MyStore
+Automated Store Program.
