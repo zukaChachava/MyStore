@@ -5,4 +5,8 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MyStore.Repository\MyStore.Repository.csproj" />
+    </ItemGroup>
+
 </Project>

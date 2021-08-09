@@ -1,4 +1,5 @@
 ﻿using System;
+using MyStore.Repository.Context;
 
 namespace MyStore.ConsoleApp
 {
@@ -6,7 +7,11 @@ namespace MyStore.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            using (AppDbContext context = new AppDbContext())
+            {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+            }
         }
     }
 }
