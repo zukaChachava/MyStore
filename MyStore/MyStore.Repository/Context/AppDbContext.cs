@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using MyStore.Config;
 using MyStore.Domain.DTO;
 
 namespace MyStore.Repository.Context
@@ -8,7 +9,7 @@ namespace MyStore.Repository.Context
     {
         public AppDbContext() : base(SqlServerDbContextOptionsExtensions.UseSqlServer(
             new DbContextOptionsBuilder(),
-            @"server=localhost; database=MyStore; uid=sa; pwd=Password123;").Options)
+            new SettingsReader().GetDbSettings().ConnectionString).Options)
         {
             
         }

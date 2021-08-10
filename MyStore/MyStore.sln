@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStore.Domain", "MyStore.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStore.Repository", "MyStore.Repository\MyStore.Repository.csproj", "{913051B9-EB0B-4C56-B19E-EE1B442706F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyStore.Config", "MyStore.Config\MyStore.Config.csproj", "{38473233-B087-4BFF-BD72-DD1456881687}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{913051B9-EB0B-4C56-B19E-EE1B442706F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{913051B9-EB0B-4C56-B19E-EE1B442706F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{913051B9-EB0B-4C56-B19E-EE1B442706F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38473233-B087-4BFF-BD72-DD1456881687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38473233-B087-4BFF-BD72-DD1456881687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38473233-B087-4BFF-BD72-DD1456881687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38473233-B087-4BFF-BD72-DD1456881687}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

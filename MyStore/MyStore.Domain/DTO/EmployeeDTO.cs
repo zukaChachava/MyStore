@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyStore.Domain.DTO
 {
-    //[Table("Employees")]
+    [Table("Employees")]
     public class EmployeeDTO : BaseDTO
     {
         [MaxLength(20), Required]
