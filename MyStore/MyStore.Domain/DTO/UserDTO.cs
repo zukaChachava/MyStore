@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,5 +12,7 @@ namespace MyStore.Domain.DTO
         
         [MaxLength(20)]
         public string Password { get; set; }
+        
+        public ICollection<UserGroupsDTO> UserGroups { get; set; }
     }
 }
