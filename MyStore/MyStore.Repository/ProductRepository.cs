@@ -10,5 +10,12 @@ namespace MyStore.Repository
         {
             
         }
+
+        public override void Delete(Product model)
+        {
+            ProductDTO dto = _mapper.Map<ProductDTO>(model);
+            dto.IsDeleted = true;
+            _dbSet.Update(dto);
+        }
     }
 }

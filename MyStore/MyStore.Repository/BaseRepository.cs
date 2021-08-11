@@ -25,13 +25,13 @@ namespace MyStore.Repository
             _dbSet = _context.Set<TDTO>();
         }
 
-        public TModel Get(int Id) =>  GetModel(_dbSet.Single(x => x.ID == Id));
+        public virtual TModel Get(int Id) =>  GetModel(_dbSet.Single(x => x.ID == Id));
 
-        public IEnumerable<TModel> Select() => _dbSet.Select(x => GetModel(x));
+        public virtual IEnumerable<TModel> Select() => _dbSet.Select(x => GetModel(x));
 
-        public IEnumerable<TModel> Select(Predicate<TModel> predicate) => _dbSet.Select(x => GetModel(x)).Where(x => predicate(x));
+        public virtual IEnumerable<TModel> Select(Predicate<TModel> predicate) => _dbSet.Select(x => GetModel(x)).Where(x => predicate(x));
 
-        public TModel Add(TModel model)
+        public virtual TModel Add(TModel model)
         {
             TDTO dto = GetDTO(model);
             _dbSet.Add(dto);
@@ -39,9 +39,9 @@ namespace MyStore.Repository
             return model;
         }
 
-        public void Update(TModel model) => _dbSet.Update(GetDTO(model));
+        public virtual void Update(TModel model) => _dbSet.Update(GetDTO(model));
 
-        public void Delete(TModel model) => _dbSet.Remove(GetDTO(model));
+        public virtual void Delete(TModel model) => _dbSet.Remove(GetDTO(model));
 
         protected TDTO GetDTO(TModel model) =>  _mapper.Map<TDTO>(model);
 

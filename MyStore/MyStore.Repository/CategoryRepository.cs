@@ -8,7 +8,13 @@ namespace MyStore.Repository
     {
         public CategoryRepository(AppDbContext context) : base(context)
         {
-            
+        }
+
+        public override void Delete(Category model)
+        {
+            CategoryDTO dto = _mapper.Map<CategoryDTO>(model);
+            dto.IsDeleted = true;
+            _dbSet.Update(dto);
         }
     }
 }

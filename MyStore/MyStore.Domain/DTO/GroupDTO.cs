@@ -14,8 +14,6 @@ namespace MyStore.Domain.DTO
         [Required, MaxLength(20)]
         public string Description { get; set; }
         
-        public ICollection<PermissionDTO> Permissions { get; set; }
-        
         public ICollection<UserGroupsDTO> UserGroups { get; set; }
         
         public ICollection<GroupPermissionsDTO> GroupPermissions { get; set; }

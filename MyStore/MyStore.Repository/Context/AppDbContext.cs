@@ -74,6 +74,72 @@ namespace MyStore.Repository.Context
             #endregion
             
             #endregion
+
+            #region Properties
+
+            #region Provider
+
+            modelBuilder.Entity<ProviderDTO>()
+                .Property(p => p.IsDeleted)
+                .HasDefaultValue(false);
+
+            #endregion
+
+            #region Employee
+
+            modelBuilder.Entity<EmployeeDTO>()
+                .Property(e => e.IsDeleted)
+                .HasDefaultValue(false);
+
+            #endregion
+
+            #region User
+
+            modelBuilder.Entity<UserDTO>()
+                .Property(p => p.IsDeleted)
+                .HasDefaultValue(false);
+            
+            modelBuilder.Entity<UserDTO>()
+                .Property(p => p.IsActive)
+                .HasDefaultValue(true);
+
+            #endregion
+
+            #region Category
+
+            modelBuilder.Entity<CategoryDTO>()
+                .Property(c => c.IsDeleted)
+                .HasDefaultValue(false);
+
+            #endregion
+
+            #region Product
+
+            modelBuilder.Entity<ProductDTO>()
+                .Property(p => p.IsDeleted)
+                .HasDefaultValue(false);
+
+            #endregion
+
+            #region Permissions
+
+            modelBuilder.Entity<PermissionDTO>()
+                .HasIndex(p => p.PermissionCode)
+                .IsUnique(true)
+                .IsClustered(false);
+
+            #endregion
+
+            #region Groups
+
+            modelBuilder.Entity<GroupDTO>()
+                .HasIndex(g => g.Name)
+                .IsUnique(true)
+                .IsClustered(false);
+
+            #endregion
+
+            #endregion
         }
     }
 }

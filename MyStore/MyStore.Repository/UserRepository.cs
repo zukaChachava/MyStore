@@ -10,5 +10,12 @@ namespace MyStore.Repository
         {
             
         }
+
+        public override void Delete(User model)
+        {
+            UserDTO dto = _mapper.Map<UserDTO>(model);
+            dto.IsActive = true;
+            _dbSet.Update(dto);
+        }
     }
 }
