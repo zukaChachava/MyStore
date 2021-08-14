@@ -59,7 +59,7 @@ namespace MyStore.Repository.Context
             #region GroupPermissions
 
             modelBuilder.Entity<GroupPermissionsDTO>()
-                .HasKey(gp => new { gp.GroupID, gp.PermissionID });
+                .HasKey(gp => new { gp.GroupID, gp.PermissionCode });
 
             modelBuilder.Entity<GroupPermissionsDTO>()
                 .HasOne(gp => gp.Group)
@@ -69,7 +69,8 @@ namespace MyStore.Repository.Context
             modelBuilder.Entity<GroupPermissionsDTO>()
                 .HasOne(gp => gp.Permission)
                 .WithMany(p => p.GroupPermissions)
-                .HasForeignKey(gp => gp.PermissionID);
+                .HasForeignKey(gp => gp.PermissionCode)
+                .HasPrincipalKey(p => p.PermissionCode);
 
             #endregion
             

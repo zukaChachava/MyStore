@@ -8,14 +8,14 @@ namespace MyStore.Repository.Interfaces
     {
         TModel Get(int Id);
 
-        IEnumerable<TModel> Select();
+        IEnumerable<TModel> Select(User user);
 
-        IEnumerable<TModel> Select(Predicate<TModel> predicate);
+        IEnumerable<TModel> Select(User user, Predicate<TModel> predicate);
 
-        TModel Add(TModel model);
+        TModel Add(User user, TModel model);
 
-        void Update(TModel model);
+        void Update(User user, TModel model);
 
-        void Delete(TModel model);
+        void Delete(User user, TModel model);
     }
 }

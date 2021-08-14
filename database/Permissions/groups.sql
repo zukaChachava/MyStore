@@ -1,4 +1,6 @@
 -- Groups
+use MyStore
+go
 
 insert into Groups (Name, Description)
 values ('Admin', 'Main User which controls other users, Providers, Categories');

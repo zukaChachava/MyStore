@@ -1,4 +1,7 @@
 -- List Permissions
+use MyStore
+go
+
 insert into Permissions (PermissionCode, Description)
 values (1, 'See Employee List');
 

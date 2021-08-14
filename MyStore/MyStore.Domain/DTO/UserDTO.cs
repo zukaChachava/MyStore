@@ -8,6 +8,11 @@ namespace MyStore.Domain.DTO
     [Table("Users")]
     public class UserDTO : EmployeeDTO
     {
+        public UserDTO()
+        {
+            UserGroups = new List<UserGroupsDTO>();
+        }
+
         [MaxLength(20)]
         public string Username { get; set; }
         
