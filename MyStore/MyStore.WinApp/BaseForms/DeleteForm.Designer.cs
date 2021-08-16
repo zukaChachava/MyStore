@@ -1,9 +1,9 @@
 ﻿using MyStore.Domain.Models;
 using MyStore.Repository.Interfaces;
 
-namespace MyStore.WinApp
+namespace MyStore.WinApp.BaseForms
 {
-    abstract partial class EditForm<TModel, TRepo> where TModel: BaseModel, new() where  TRepo : IRepository<TModel>
+    abstract partial class DeleteForm<TModel, TRepo> where TModel : BaseModel, new() where TRepo : IRepository<TModel>
     {
         /// <summary>
         /// Required designer variable.
@@ -33,14 +33,14 @@ namespace MyStore.WinApp
         {
             this.SuspendLayout();
             // 
-            // EditForm
+            // DeleteForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "EditForm";
-            this.Text = "EditForm";
-            this.Load += new System.EventHandler(this.EditForm_Load);
+            this.Name = "DeleteForm";
+            this.Text = "DeleteForm";
+            this.Load += new System.EventHandler(this.DeleteForm_Load);
             this.ResumeLayout(false);
 
         }

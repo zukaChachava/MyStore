@@ -67,6 +67,7 @@ namespace MyStore.WinApp
             this.quantityTxt.Name = "quantityTxt";
             this.quantityTxt.Size = new System.Drawing.Size(209, 23);
             this.quantityTxt.TabIndex = 11;
+            this.quantityTxt.TextChanged += new System.EventHandler(this.quantityTxt_TextChanged);
             // 
             // label1
             // 
@@ -102,6 +103,7 @@ namespace MyStore.WinApp
             this.priceTxt.Name = "priceTxt";
             this.priceTxt.Size = new System.Drawing.Size(208, 23);
             this.priceTxt.TabIndex = 16;
+            this.priceTxt.TextChanged += new System.EventHandler(this.priceTxt_TextChanged);
             // 
             // label4
             // 
@@ -125,6 +127,7 @@ namespace MyStore.WinApp
             this.validDate.Name = "validDate";
             this.validDate.Size = new System.Drawing.Size(210, 23);
             this.validDate.TabIndex = 20;
+            this.validDate.ValueChanged += new System.EventHandler(this.validDate_ValueChanged);
             // 
             // label5
             // 

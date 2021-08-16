@@ -1,41 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyStore.Domain.Models;
 using MyStore.Repository;
+using MyStore.WinApp.Interfaces;
+using MyStore.WinApp.LocalData;
+using MyStore.WinApp.Tools;
 
 namespace MyStore.WinApp
 {
-    public partial class OrderDetailsAdd : Form
+    public partial class OrderDetailsAdd : Form, IModelForm<OrderDetails>
     {
-        protected OrderDetailsRepository _repository;
+        protected readonly OrderDetailsRepository _repository;
+        protected List<OrderDetails> _orderDetails;
 
-        public OrderDetailsAdd(OrderDetailsRepository repository, OrderDetails model = null)
+        public OrderDetailsAdd(OrderDetailsRepository repository, List<OrderDetails> orderDetails)
         {
             InitializeComponent();
             sellPriceTxt.Enabled = false;
+            priceTxt.Enabled = false;
             _repository = repository;
+            _orderDetails = orderDetails;
             LoadProducts();
+            Model = new OrderDetails();
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            if (model != null) LoadModel(model);
         }
 
         public OrderDetails Model { get; protected set; }
 
-        public ComboBoxDetailedItem GetProductName()
-        {
-            return productBox.SelectedItem as ComboBoxDetailedItem;
-        }
-
         protected void LoadProducts()
         {
-            
+            productBox.Items.AddRange(_repository.GetProducts(LocalStorage.User).ToArray());
         }
 
         protected void ReadInput()
@@ -54,34 +50,54 @@ namespace MyStore.WinApp
             Model = model;
         }
 
-        protected void LoadModel(OrderDetails model)
-        {
-            foreach (ComboBoxDetailedItem item in productBox.Items)
-            {
-                
-            }
-
-            priceTxt.Text = model.UnitPrice.ToString();
-            quantityTxt.Text = model.Quantity.ToString();
-            validDate.Text = model.Valid.ToString();
-        }
-
         private void productBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //sellPriceTxt.Text = _repository.GetProductPriceById((productBox.SelectedItem as ComboBoxDetailedItem).Id).ToString();
+            Model.Product = productBox.SelectedItem as Product;
+            sellPriceTxt.Text = Model.Product.Price.ToString();
+            priceTxt.Enabled = true;
         }
 
         private void addBtn_Click(object sender, EventArgs e)
         {
             try
             {
-                ReadInput();
+                if (_orderDetails.Contains(Model))
+                    throw new Exception("Model already exists");
+                _orderDetails.Add(Model);
                 Close();
             }
             catch(Exception ex)
             {
-               // FormTools.ShowError("Ops", ex.Message);
+               FormTools.ShowError("Ops", ex.Message);
             }
+        }
+
+        private void priceTxt_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Model.UnitPrice = Convert.ToDecimal(priceTxt.Text);
+                if (Convert.ToDecimal(sellPriceTxt.Text) < Convert.ToDecimal(priceTxt.Text))
+                    throw new Exception("Sell price is lower !");
+            }
+            catch(FormatException)
+            {
+                FormTools.ShowInfo("Ops", "Wrong numeric format, Pleas write only numbers !");
+            }
+            catch(Exception ex)
+            {
+                FormTools.ShowError("Ops", ex.Message);
+            }
+        }
+
+        private void quantityTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Quantity = Convert.ToInt32(quantityTxt.Text);
+        }
+
+        private void validDate_ValueChanged(object sender, EventArgs e)
+        {
+            Model.Valid = validDate.Value;
         }
     }
 }

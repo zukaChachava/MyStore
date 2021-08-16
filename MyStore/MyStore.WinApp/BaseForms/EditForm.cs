@@ -1,4 +1,5 @@
-﻿using MyStore.WinApp.LocalData;
+﻿using MyStore.WinApp.Interfaces;
+using MyStore.WinApp.LocalData;
 using MyStore.WinApp.Tools;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MyStore.WinApp
+namespace MyStore.WinApp.BaseForms
 {
     public abstract partial class EditForm<TModel, TRepo> : Form
     {
@@ -21,6 +22,21 @@ namespace MyStore.WinApp
             InitializeComponent();
             _repository = repository;
             FormBorderStyle = FormBorderStyle.FixedDialog;
+        }
+
+        protected virtual TModel GetSelectedModel()
+        {
+            IListForm<TModel> listForm = null;
+            Form activeChild = (Owner as MainForm).ActiveMdiChild;
+
+            if (activeChild == null || activeChild.GetType() != typeof(TModel))
+            {
+                Abort();
+                return null;
+            }
+
+            listForm = activeChild as IListForm<TModel>;
+            return listForm.GetSelectedModel();
         }
 
         protected virtual void Edit()

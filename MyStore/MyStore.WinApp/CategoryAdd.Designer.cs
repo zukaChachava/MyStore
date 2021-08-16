@@ -53,6 +53,7 @@ namespace MyStore.WinApp
             this.nameTxt.Name = "nameTxt";
             this.nameTxt.Size = new System.Drawing.Size(186, 23);
             this.nameTxt.TabIndex = 1;
+            this.nameTxt.TextChanged += new System.EventHandler(this.nameTxt_TextChanged);
             // 
             // label1
             // 

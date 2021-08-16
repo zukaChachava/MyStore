@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyStore.Domain.Models;
 using MyStore.Repository;
 using MyStore.Repository.Context;
+using MyStore.WinApp.BaseForms;
 using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.Tools;
 

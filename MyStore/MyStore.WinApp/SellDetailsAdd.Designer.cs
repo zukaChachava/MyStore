@@ -65,6 +65,7 @@ namespace MyStore.WinApp
             this.quantityTxt.Name = "quantityTxt";
             this.quantityTxt.Size = new System.Drawing.Size(208, 23);
             this.quantityTxt.TabIndex = 2;
+            this.quantityTxt.TextChanged += new System.EventHandler(this.quantityTxt_TextChanged);
             // 
             // label2
             // 
@@ -90,6 +91,7 @@ namespace MyStore.WinApp
             this.discountTxt.Name = "discountTxt";
             this.discountTxt.Size = new System.Drawing.Size(208, 23);
             this.discountTxt.TabIndex = 5;
+            this.discountTxt.TextChanged += new System.EventHandler(this.discountTxt_TextChanged);
             // 
             // addBtn
             // 

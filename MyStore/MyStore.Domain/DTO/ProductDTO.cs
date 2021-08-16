@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,5 +22,11 @@ namespace MyStore.Domain.DTO
         
         [Required]
         public CategoryDTO Category { get; set; }
+
+        public ICollection<OrderDetailsDTO> OrderDetails { get; set; }
+
+        public ICollection<SellDetailsDTO> SellDetails { get; set; }
+
+        public ICollection<ProductDetailsDTO> ProductDetails { get; set; }
     }
 }

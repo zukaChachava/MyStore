@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using MyStore.Domain.Models;
 using MyStore.Repository;
 using MyStore.Repository.Context;
+using MyStore.WinApp.BaseForms;
+using MyStore.WinApp.LocalData;
 
 namespace MyStore.WinApp
 {
@@ -25,7 +27,7 @@ namespace MyStore.WinApp
 
         public override void RefreshData()
         {
-            //Table = _repository.GetOrderDetailsById(_orderId);
+            Data = _repository.Select(LocalStorage.User);
         }
     }
 }

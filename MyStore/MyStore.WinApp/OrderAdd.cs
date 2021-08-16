@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MyStore.Domain.Models;
 using MyStore.Repository;
 using MyStore.Repository.Context;
+using MyStore.WinApp.BaseForms;
 using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.LocalData;
 using MyStore.WinApp.Tools;
@@ -19,70 +20,42 @@ namespace MyStore.WinApp
     public partial class OrderAdd : AddForm<Order, OrderRepository>
     {
         protected OrderDetailsRepository _orderDetailsRepository;
-        protected DataTable _table;
+        protected User _user;
+        protected Provider _provider;
         protected List<OrderDetails> _orderDetails;
 
         public OrderAdd(AppDbContext context) : base(new OrderRepository(context))
         {
             InitializeComponent();
             _orderDetailsRepository = new OrderDetailsRepository(context);
-            LoadProvider();
-            LoadUser();
-            _table = GenerateTable();
             _orderDetails = new List<OrderDetails>();
             gridView.ContextMenuStrip = productStrip;
+            LoadProviders();
+            LoadUser();
         }
 
-        protected void LoadProvider()
+        protected void LoadProviders()
         {
-
+            // TODO: ToArray is not good option here :(
+            providerBox.Items.AddRange(_repository.GetProviders(LocalStorage.User).ToArray());
         }
 
         protected void LoadUser()
         {
-            userBox.Items.Add(new ComboBoxItem() { Id = LocalStorage.User.ID, Name = LocalStorage.User.Username });
+            userBox.Items.Add(LocalStorage.User);
             userBox.SelectedIndex = 0;
             userBox.Enabled = false;
         }
 
-        protected override Order LoadModel()
-        {
-            return new Order()
-            {
-                
-            };
-        }
-
         private void productBtn_Click(object sender, EventArgs e)
         {
-            
-        }
-
-        protected DataTable GenerateTable()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("Name");
-            table.Columns.Add("Quantity");
-            table.Columns.Add("Price");
-            table.Columns.Add("Valid");
-
-            return table;
-        }
-
-        protected void TableChanged()
-        {
-            gridView.DataSource = _table;
+            var orderDetailsWindow = new OrderDetailsAdd(_orderDetailsRepository, _orderDetails);
+            orderDetailsWindow.ShowDialog();
         }
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-           
-        }
-
-        private void LoadOrderDetailId(int id)
-        {
-            foreach (OrderDetails item in _orderDetails)
-                item.ID = id;
+            //
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
@@ -96,6 +69,22 @@ namespace MyStore.WinApp
 
             if(index >= 0)
                 _orderDetails.RemoveAt(index);
+        }
+
+        private void providerBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _provider = providerBox.SelectedItem as Provider;
+        }
+
+        private void userBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _user = userBox.SelectedItem as User;
+        }
+
+        private void dateBox_ValueChanged(object sender, EventArgs e)
+        {
+            Model.OrderDate = DateTime.Now;
+            Model.RequiredDate = dateBox.Value;
         }
     }
 }

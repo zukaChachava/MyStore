@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MyStore.Domain.DTO
 {
     [Table("OrderDetails")]
-    public class OrderDetailsDTO : OrderDTO
+    public class OrderDetailsDTO : BaseDTO
     {
         [ForeignKey("Product")]
         public int ProductID { get; set; }
@@ -21,7 +21,10 @@ namespace MyStore.Domain.DTO
         
         [Required]
         public DateTime? Valid { get; set; }
-        
+
+        [Required]
+        public OrderDTO Order { get; set; }
+
         [Required]
         public ProductDTO Product { get; set; }
     }

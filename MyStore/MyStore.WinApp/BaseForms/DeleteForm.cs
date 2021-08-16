@@ -14,7 +14,7 @@ using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.Tools;
 using MyStore.WinApp.LocalData;
 
-namespace MyStore.WinApp
+namespace MyStore.WinApp.BaseForms
 {
     public abstract partial class DeleteForm<TModel, TRepo> : Form
     {

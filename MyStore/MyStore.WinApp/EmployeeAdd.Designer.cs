@@ -82,6 +82,7 @@ namespace MyStore.WinApp
             this.nameTxt.Name = "nameTxt";
             this.nameTxt.Size = new System.Drawing.Size(147, 23);
             this.nameTxt.TabIndex = 3;
+            this.nameTxt.TextChanged += new System.EventHandler(this.nameTxt_TextChanged);
             // 
             // lastnameTxt
             // 
@@ -89,6 +90,7 @@ namespace MyStore.WinApp
             this.lastnameTxt.Name = "lastnameTxt";
             this.lastnameTxt.Size = new System.Drawing.Size(147, 23);
             this.lastnameTxt.TabIndex = 4;
+            this.lastnameTxt.TextChanged += new System.EventHandler(this.lastnameTxt_TextChanged);
             // 
             // personalTxt
             // 
@@ -96,6 +98,7 @@ namespace MyStore.WinApp
             this.personalTxt.Name = "personalTxt";
             this.personalTxt.Size = new System.Drawing.Size(202, 23);
             this.personalTxt.TabIndex = 5;
+            this.personalTxt.TextChanged += new System.EventHandler(this.personalTxt_TextChanged);
             // 
             // label3
             // 
@@ -112,6 +115,7 @@ namespace MyStore.WinApp
             this.phoneTxt.Name = "phoneTxt";
             this.phoneTxt.Size = new System.Drawing.Size(147, 23);
             this.phoneTxt.TabIndex = 7;
+            this.phoneTxt.TextChanged += new System.EventHandler(this.phoneTxt_TextChanged);
             // 
             // emailTxt
             // 
@@ -119,6 +123,7 @@ namespace MyStore.WinApp
             this.emailTxt.Name = "emailTxt";
             this.emailTxt.Size = new System.Drawing.Size(147, 23);
             this.emailTxt.TabIndex = 8;
+            this.emailTxt.TextChanged += new System.EventHandler(this.emailTxt_TextChanged);
             // 
             // label4
             // 
@@ -144,6 +149,7 @@ namespace MyStore.WinApp
             this.addressTxt.Name = "addressTxt";
             this.addressTxt.Size = new System.Drawing.Size(202, 23);
             this.addressTxt.TabIndex = 11;
+            this.addressTxt.TextChanged += new System.EventHandler(this.addressTxt_TextChanged);
             // 
             // label6
             // 
@@ -170,6 +176,7 @@ namespace MyStore.WinApp
             this.dateBox.Name = "dateBox";
             this.dateBox.Size = new System.Drawing.Size(246, 23);
             this.dateBox.TabIndex = 14;
+            this.dateBox.ValueChanged += new System.EventHandler(this.dateBox_ValueChanged);
             // 
             // EmployeeAdd
             // 

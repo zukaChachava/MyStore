@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MyStore.Domain.Models
 {
@@ -15,5 +16,12 @@ namespace MyStore.Domain.Models
         public Provider Provider { get; set; }
         
         public User User { get; set; }
+
+        public ICollection<OrderDetails> OrderDetails { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ID} {OrderDate}";
+        }
     }
 }

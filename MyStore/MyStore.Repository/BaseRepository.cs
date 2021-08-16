@@ -24,6 +24,7 @@ namespace MyStore.Repository
         protected BaseRepository(AppDbContext context, RepositoryPermission permission)
         {
             _context = context;
+            _repositoryPermission = permission;
             _mapperConfiguration = MapperConfiguration();
             _mapper = new Mapper(_mapperConfiguration);
             _userMapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<User, UserDTO>().ReverseMap()));
@@ -32,7 +33,7 @@ namespace MyStore.Repository
 
         public virtual TModel Get(int Id)
         {
-            return GetModel(_dbSet.Single(x => x.ID == Id));
+            return _mapper.Map<TModel>(_dbSet.Single(x => x.ID == Id));
         }
 
         public virtual TDTO Get(TModel model)
@@ -45,7 +46,7 @@ namespace MyStore.Repository
             if (!HasPermision(user, _repositoryPermission.Select))
                 throw new NotHavePermission("Do not have Select Permission");
 
-            return _dbSet.Select(x => GetModel(x));
+            return _dbSet.Select(x => _mapper.Map<TModel>(x));
         }
 
         public virtual IEnumerable<TModel> Select(User user, Predicate<TModel> predicate) => Select(user).Where(x => predicate(x));
@@ -55,7 +56,7 @@ namespace MyStore.Repository
             if (!HasPermision(user, _repositoryPermission.Add))
                 throw new NotHavePermission("Do not have Add Permission");
 
-            TDTO dto = GetDTO(model);
+            TDTO dto = _mapper.Map<TDTO>(model);
             _dbSet.Add(dto);
             model.ID = dto.ID;
             return model;
@@ -66,7 +67,7 @@ namespace MyStore.Repository
             if (!HasPermision(user, _repositoryPermission.Update))
                 throw new NotHavePermission("Do not have Update Permission");
 
-            _dbSet.Update(GetDTO(model));
+            _dbSet.Update(_mapper.Map<TDTO>(model));
         }
 
         public virtual void Delete(User user, TModel model)
@@ -74,7 +75,7 @@ namespace MyStore.Repository
             if (!HasPermision(user, _repositoryPermission.Delete))
                 throw new NotHavePermission("Do not have Delete Permission");
 
-            _dbSet.Remove(GetDTO(model));
+            _dbSet.Remove(_mapper.Map<TDTO>(model));
         }
 
         public IEnumerable<int> GetPermissions(User user)
@@ -89,10 +90,6 @@ namespace MyStore.Repository
             string x = permissions.ToString();
             return permissions;
         }
-
-        protected TDTO GetDTO(TModel model) => _mapper.Map<TDTO>(model);
-
-        protected TModel GetModel(TDTO dto) => _mapper.Map<TModel>(dto);
 
         protected virtual MapperConfiguration MapperConfiguration()
         {

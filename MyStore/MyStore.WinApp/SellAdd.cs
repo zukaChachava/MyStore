@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using MyStore.Domain.Models;
 using MyStore.Repository;
 using MyStore.Repository.Context;
+using MyStore.WinApp.BaseForms;
 using MyStore.WinApp.Tools;
 
 namespace MyStore.WinApp
@@ -18,61 +19,15 @@ namespace MyStore.WinApp
         public SellAdd(AppDbContext context) : base(new SellRepository(context))
         {
             InitializeComponent();
-            LoadUser();
             _sellDetailsRepository = new SellDetailsRepository(context);
-            _table = GenerateTable();
             _sellDetails = new List<SellDetails>();
             gridView.ContextMenuStrip = productStrip;
         }
 
-        protected override Sell LoadModel()
-        {
-            return new Sell()
-            {
-
-            };
-        }
-
-        protected void LoadUser()
-        {
-            //userBox.Items.Add(new ComboBoxItem() { Id = LocalStorage.UserId, Name = LocalStorage.UserName });
-            userBox.SelectedIndex = 0;
-            userBox.Enabled = false;
-        }
-
         private void addProductBtn_Click(object sender, EventArgs e)
         {
-            //SellDetailsAdd sellDetailsAdd = new SellDetailsAdd(_sellDetailsRepository);
-            //sellDetailsAdd.ShowDialog();
-            //if (sellDetailsAdd.Model != null)
-            //{
-            //    SellDetails model = sellDetailsAdd.Model;
-            //    if(_sellDetails.Exists(x => x.ProductId == model.ProductId))
-            //    {
-            //        FormTools.ShowInfo("Ops", "Product already added");
-            //        return;
-            //    }
-
-            //    _sellDetails.Add(model);
-            //    _table.Rows.Add(new object[] { sellDetailsAdd.GetProductName(), model.Quantity, model.UnitPrice, model.Discount });
-            //    TableChanged();
-            //}
-        }
-
-        protected DataTable GenerateTable()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("Name");
-            table.Columns.Add("Quantity");
-            table.Columns.Add("Price");
-            table.Columns.Add("Discount");
-
-            return table;
-        }
-
-        protected void TableChanged()
-        {
-            gridView.DataSource = _table;
+            var sellDetailsWindow = new SellDetailsAdd(_sellDetailsRepository, _sellDetails);
+            sellDetailsWindow.ShowDialog();
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -94,11 +49,6 @@ namespace MyStore.WinApp
             }
         }
 
-        private void LoadOrderDetailId(int id)
-        {
-           
-        }
-
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (gridView.SelectedRows.Count == 0 || gridView.Rows.Count == 0)
@@ -118,6 +68,16 @@ namespace MyStore.WinApp
 
             if (index >= 0)
                 _sellDetails.RemoveAt(index);
+        }
+
+        private void userBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Model.User = userBox.SelectedItem as User;
+        }
+
+        private void datePicker_ValueChanged(object sender, EventArgs e)
+        {
+            Model.SellDate = datePicker.Value;
         }
     }
 }

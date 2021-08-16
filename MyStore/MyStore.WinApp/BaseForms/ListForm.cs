@@ -7,11 +7,11 @@ using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.LocalData;
 using System.Linq;
 
-namespace MyStore.WinApp
+namespace MyStore.WinApp.BaseForms
 {
-    public abstract partial class ListForm<TModel, TRepo> : Form, IListForm
+    public abstract partial class ListForm<TModel, TRepo> : Form, IListForm<TModel>, IListFormFuncs, IRefresher
     {
-        protected DataTable _table;
+        protected IEnumerable<TModel> _data;
         protected TRepo _repository;
 
         public ListForm(TRepo repository)
@@ -21,17 +21,18 @@ namespace MyStore.WinApp
             AddPermission = DeletePermission = EditPermission = 100;
         }
 
-        public DataTable Table
+        public IEnumerable<TModel> Data
         {
             get
             {
-                return _table;
+                return _data;
             }
             protected set
             {
-                _table = value;
-                dataGridView.DataSource = _table;
-                dataGridView.Columns["Id"].Visible = false;
+                _data = value;
+                //TODO: I don't like ToList() func here, but I haven't found better solution :(
+                dataGridView.DataSource = _data.ToList();
+                dataGridView.Columns["ID"].Visible = false;
             }
         }
 
@@ -90,7 +91,7 @@ namespace MyStore.WinApp
 
         public virtual void RefreshData()
         {
-            //Table = _repository.GetData();
+            _data = _repository.Select(LocalStorage.User);
         }
 
         public Action<object, EventArgs> AddFunction { get; set; }
@@ -118,6 +119,16 @@ namespace MyStore.WinApp
         private void contextMnuDelete_Click(object sender, EventArgs e)
         {
             DeleteFunction(sender, e);
+        }
+
+        public int GetSelectedRowIndex()
+        {
+            throw new NotImplementedException();
+        }
+
+        public TModel GetSelectedModel()
+        {
+            throw new NotImplementedException();
         }
     }
 }

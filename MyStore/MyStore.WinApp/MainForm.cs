@@ -280,7 +280,7 @@ namespace MyStore.WinApp
 
         private void GlobalAdd_Click(object sender, EventArgs e)
         {
-            IListForm form = (IListForm)ActiveMdiChild;
+            IListFormFuncs form = (IListFormFuncs)ActiveMdiChild;
             if (form == null)
             {
                 FormTools.ShowInfo("Ops", "First you should open list window !");
@@ -316,7 +316,7 @@ namespace MyStore.WinApp
 
         private void RefreshList()
         {
-            foreach (IListForm form in MdiChildren)
+            foreach (IRefresher form in MdiChildren)
                 form.RefreshData();
         }
 

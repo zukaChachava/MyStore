@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
+using MyStore.Domain.Models;
 
 namespace MyStore.WinApp.Interfaces
 {
-	public interface IListForm
+	public interface IListForm<TModel> where TModel : BaseModel
 	{
-		DataTable Table { get; }
+		TModel GetSelectedModel();
 
-		IDictionary<string, object> GetSelectedId();
-
-		Action<object, EventArgs> AddFunction { get; set; }
-
-	    Action<object, EventArgs> EditFunction { get; set; }
-
-		Action<object, EventArgs> DeleteFunction { get; set; }
-
-		void RefreshData();
+		int GetSelectedRowIndex();
 	}
 }

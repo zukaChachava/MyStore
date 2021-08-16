@@ -68,6 +68,7 @@ namespace MyStore.WinApp
             this.nameTxt.Name = "nameTxt";
             this.nameTxt.Size = new System.Drawing.Size(184, 23);
             this.nameTxt.TabIndex = 2;
+            this.nameTxt.TextChanged += new System.EventHandler(this.nameTxt_TextChanged);
             // 
             // phoneTxt
             // 
@@ -75,6 +76,7 @@ namespace MyStore.WinApp
             this.phoneTxt.Name = "phoneTxt";
             this.phoneTxt.Size = new System.Drawing.Size(149, 23);
             this.phoneTxt.TabIndex = 3;
+            this.phoneTxt.TextChanged += new System.EventHandler(this.phoneTxt_TextChanged);
             // 
             // emailTxt
             // 
@@ -82,6 +84,7 @@ namespace MyStore.WinApp
             this.emailTxt.Name = "emailTxt";
             this.emailTxt.Size = new System.Drawing.Size(149, 23);
             this.emailTxt.TabIndex = 4;
+            this.emailTxt.TextChanged += new System.EventHandler(this.emailTxt_TextChanged);
             // 
             // label2
             // 
@@ -107,6 +110,7 @@ namespace MyStore.WinApp
             this.locationTxt.Name = "locationTxt";
             this.locationTxt.Size = new System.Drawing.Size(184, 23);
             this.locationTxt.TabIndex = 7;
+            this.locationTxt.TextChanged += new System.EventHandler(this.locationTxt_TextChanged);
             // 
             // label4
             // 

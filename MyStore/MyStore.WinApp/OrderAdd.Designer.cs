@@ -67,6 +67,7 @@ namespace MyStore.WinApp
             this.providerBox.Name = "providerBox";
             this.providerBox.Size = new System.Drawing.Size(167, 23);
             this.providerBox.TabIndex = 1;
+            this.providerBox.SelectedIndexChanged += new System.EventHandler(this.providerBox_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -93,15 +94,16 @@ namespace MyStore.WinApp
             this.dateBox.Name = "dateBox";
             this.dateBox.Size = new System.Drawing.Size(239, 23);
             this.dateBox.TabIndex = 5;
+            this.dateBox.ValueChanged += new System.EventHandler(this.dateBox_ValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(312, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 15);
+            this.label2.Size = new System.Drawing.Size(81, 15);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Date";
+            this.label2.Text = "Required Date";
             // 
             // userBox
             // 
@@ -111,6 +113,7 @@ namespace MyStore.WinApp
             this.userBox.Name = "userBox";
             this.userBox.Size = new System.Drawing.Size(167, 23);
             this.userBox.TabIndex = 7;
+            this.userBox.SelectedIndexChanged += new System.EventHandler(this.userBox_SelectedIndexChanged);
             // 
             // productBtn
             // 
@@ -154,19 +157,19 @@ namespace MyStore.WinApp
             this.editToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.productStrip.Name = "productStrip";
-            this.productStrip.Size = new System.Drawing.Size(181, 70);
+            this.productStrip.Size = new System.Drawing.Size(108, 48);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 

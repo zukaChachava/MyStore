@@ -59,6 +59,7 @@ namespace MyStore.WinApp
             this.categoryBox.Name = "categoryBox";
             this.categoryBox.Size = new System.Drawing.Size(180, 23);
             this.categoryBox.TabIndex = 1;
+            this.categoryBox.SelectedIndexChanged += new System.EventHandler(this.categoryBox_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -84,6 +85,7 @@ namespace MyStore.WinApp
             this.nameTxt.Name = "nameTxt";
             this.nameTxt.Size = new System.Drawing.Size(180, 23);
             this.nameTxt.TabIndex = 4;
+            this.nameTxt.TextChanged += new System.EventHandler(this.nameTxt_TextChanged);
             // 
             // priceTxt
             // 
@@ -91,6 +93,7 @@ namespace MyStore.WinApp
             this.priceTxt.Name = "priceTxt";
             this.priceTxt.Size = new System.Drawing.Size(180, 23);
             this.priceTxt.TabIndex = 5;
+            this.priceTxt.TextChanged += new System.EventHandler(this.priceTxt_TextChanged);
             // 
             // label3
             // 

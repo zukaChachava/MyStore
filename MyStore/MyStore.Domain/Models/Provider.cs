@@ -9,5 +9,10 @@ namespace MyStore.Domain.Models
         public string Email { get; set; }
         
         public string Location { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

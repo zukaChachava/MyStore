@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.LocalData;
 
-namespace MyStore.WinApp
+namespace MyStore.WinApp.BaseForms
 {
-    public abstract partial class AddForm<TModel, TRepo> : Form 
+    public abstract partial class AddForm<TModel, TRepo> : Form, IModelForm<TModel>
     {
         protected TRepo _repository;
 
@@ -19,14 +20,15 @@ namespace MyStore.WinApp
         {
             InitializeComponent();
             _repository = repository;
+            Model = new TModel();
             FormBorderStyle = FormBorderStyle.FixedSingle;
         }
 
-        protected abstract TModel LoadModel();
+        public TModel Model { get; private set; }
 
         public virtual void Add()
         {
-            _repository.Add(LocalStorage.User, LoadModel());
+            _repository.Add(LocalStorage.User, Model);
         }
     }
 }

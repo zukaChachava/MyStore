@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyStore.WinApp
+namespace MyStore.WinApp.Interfaces
 {
-    public class ComboBoxDetailedItem : ComboBoxItem
+    public interface IRefresher
     {
-        public decimal Price { get; set; }
+        void RefreshData();
     }
 }

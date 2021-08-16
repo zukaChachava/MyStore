@@ -10,61 +10,17 @@ using System.Windows.Forms;
 using MyStore.Domain.Models;
 using MyStore.Repository;
 using MyStore.Repository.Context;
+using MyStore.WinApp.BaseForms;
 using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.Tools;
 
 namespace MyStore.WinApp
 {
-    public partial class ProviderAdd : AddForm<Provider, ProviderRepository>, IProviderForm
+    public partial class ProviderAdd : AddForm<Provider, ProviderRepository>
     {
         public ProviderAdd(AppDbContext context) : base (new ProviderRepository(context))
         {
             InitializeComponent();
-        }
-
-        public int Id
-        {
-            get
-            {
-                return default;
-            }
-        }
-
-        public string Phone
-        {
-            get
-            {
-                return phoneTxt.Text;
-            }
-        }
-
-        public string Email
-        {
-            get
-            {
-                return emailTxt.Text;
-            }
-        }
-
-        public string ProviderName
-        {
-            get
-            {
-                return nameTxt.Text;
-            }
-        }
-
-        string IProviderForm.Location
-        {
-            get
-            {
-                return locationTxt.Text;
-            }
-        }
-
-        protected override Provider LoadModel()
-        {
-            return FormTools.ReadInputModel(this);
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -78,6 +34,26 @@ namespace MyStore.WinApp
             {
                 FormTools.ShowError("Ops", ex.Message);
             }
+        }
+
+        private void nameTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Name = nameTxt.Text;
+        }
+
+        private void phoneTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Phone = phoneTxt.Text;
+        }
+
+        private void emailTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Email = emailTxt.Text;
+        }
+
+        private void locationTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Location = locationTxt.Text;
         }
     }
 }

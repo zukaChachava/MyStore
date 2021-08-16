@@ -19,5 +19,10 @@ namespace MyStore.Domain.Models
         public DateTime? StartJob { get; set; }
         
         public DateTime? EndJob { get; set; }
+
+        public override string ToString()
+        {
+            return $"{PersonalID} {Lastname}";
+        }
     }
 }

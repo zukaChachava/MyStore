@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,5 +15,7 @@ namespace MyStore.Domain.DTO
         
         [Required]
         public UserDTO User { get; set; }
+
+        public ICollection<SellDetailsDTO> SellDetails { get; set; }
     }
 }

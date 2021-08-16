@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MyStore.Domain.Models;
 using MyStore.Repository.Context;
 using MyStore.Repository;
+using MyStore.WinApp.BaseForms;
 
 namespace MyStore.WinApp
 {
@@ -25,9 +26,9 @@ namespace MyStore.WinApp
 
         protected override void ListForm_Load(object sender, EventArgs e)
         {
-            //AddFunction = (MdiParent as MainForm).mnuEmployeeAdd_Click;
-            //EditFunction = (MdiParent as MainForm).mnuEmployeeEdit_Click;
-            //DeleteFunction = (MdiParent as MainForm).mnuEmployeeDelete_Click;
+            AddFunction = (MdiParent as MainForm).mnuEmployeeAdd_Click;
+            EditFunction = (MdiParent as MainForm).mnuEmployeeEdit_Click;
+            DeleteFunction = (MdiParent as MainForm).mnuEmployeeDelete_Click;
             base.ListForm_Load(sender, e);
         }
     }

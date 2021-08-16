@@ -84,6 +84,7 @@ namespace MyStore.WinApp
             this.userTxt.Name = "userTxt";
             this.userTxt.Size = new System.Drawing.Size(134, 23);
             this.userTxt.TabIndex = 4;
+            this.userTxt.TextChanged += new System.EventHandler(this.userTxt_TextChanged);
             // 
             // passwordTxt
             // 
@@ -91,6 +92,7 @@ namespace MyStore.WinApp
             this.passwordTxt.Name = "passwordTxt";
             this.passwordTxt.Size = new System.Drawing.Size(134, 23);
             this.passwordTxt.TabIndex = 5;
+            this.passwordTxt.TextChanged += new System.EventHandler(this.passwordTxt_TextChanged);
             // 
             // employeeBox
             // 

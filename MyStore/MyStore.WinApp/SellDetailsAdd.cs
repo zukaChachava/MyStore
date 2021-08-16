@@ -9,63 +9,42 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyStore.Domain.Models;
 using MyStore.Repository;
+using MyStore.WinApp.Interfaces;
+using MyStore.WinApp.LocalData;
 using MyStore.WinApp.Tools;
 
 namespace MyStore.WinApp
 {
-    public partial class SellDetailsAdd : Form
+    public partial class SellDetailsAdd : Form, IModelForm<SellDetails>
     {
         protected SellDetailsRepository _repository;
+        protected List<SellDetails> _sellDetails;
 
-        public SellDetailsAdd(SellDetailsRepository repository, SellDetails model = null)
+        public SellDetailsAdd(SellDetailsRepository repository, List<SellDetails> sellDetails)
         {
             InitializeComponent();
+            maxQuantityTxt.Enabled = false;
+            quantityTxt.Enabled = false;
             _repository = repository;
+            _sellDetails = sellDetails;
             LoadProducts();
-            if (model != null) LoadModel(model);
         }
 
         public SellDetails Model { get; protected set; }
 
         protected void LoadProducts()
         {
-        }
-
-        protected void ReadInput()
-        {
-            if(Convert.ToInt32(maxQuantityTxt.Text) < Convert.ToInt32(quantityTxt.Text))
-                throw new Exception("There is not enough quantity");
-
-            SellDetails model = new()
-            {
-                //ProductId = (productBox.SelectedItem as ComboBoxDetailedItem).Id,
-                Discount =  Convert.ToDecimal(discountTxt.Text),
-                Quantity = Convert.ToInt32(quantityTxt.Text),
-                UnitPrice = (productBox.SelectedItem as ComboBoxDetailedItem).Price
-            };
-            Model = model;
-        }
-
-        protected void LoadModel(SellDetails model)
-        {
-            foreach (ComboBoxDetailedItem item in productBox.Items)
-            {
-                if (item.Id == model.ProductID)
-                {
-                    productBox.SelectedItem = item;
-                    break;
-                }
-            }
-
-            quantityTxt.Text = model.Quantity.ToString();
-            discountTxt.Text = model.Discount.ToString();
+            // TODO: ToArray here :(
+            productBox.Items.AddRange(_repository.GetProducts(LocalStorage.User).ToArray());
         }
 
         private void addBtn_Click(object sender, EventArgs e)
         {
             try
             {
-                ReadInput();
+                if (_sellDetails.Contains(Model))
+                    throw new Exception("Model already exists");
+                _sellDetails.Add(Model);
                 Close();
             }
             catch(Exception ex)
@@ -76,12 +55,20 @@ namespace MyStore.WinApp
 
         private void productBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //maxQuantityTxt.Text = _repository.GetProductQuantityById((productBox.SelectedItem as ComboBoxDetailedItem).Id).ToString();
+            Model.Product = productBox.SelectedItem as Product;
+            quantityTxt.Enabled = true;
+            maxQuantityTxt.Text = _repository.GetProductDetails(LocalStorage.User, Model.Product)
+                .Sum(pd => pd.Quantity).ToString();
         }
 
-        public ComboBoxDetailedItem GetProductName()
+        private void quantityTxt_TextChanged(object sender, EventArgs e)
         {
-            return productBox.SelectedItem as ComboBoxDetailedItem;
+            Model.Quantity = Convert.ToInt32(quantityTxt.Text);
+        }
+
+        private void discountTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Discount = Convert.ToDecimal(discountTxt.Text);
         }
     }
 }

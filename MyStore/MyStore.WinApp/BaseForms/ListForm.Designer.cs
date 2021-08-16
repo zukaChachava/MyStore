@@ -2,7 +2,7 @@
 using MyStore.Repository.Interfaces;
 
 
-namespace MyStore.WinApp
+namespace MyStore.WinApp.BaseForms
 {
 	abstract partial class ListForm<TModel, TRepo> where TModel : BaseModel, new() where TRepo : IRepository<TModel>
 	{

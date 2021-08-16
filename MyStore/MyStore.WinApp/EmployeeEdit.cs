@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MyStore.Domain.Models;
+﻿using MyStore.Domain.Models;
 using MyStore.Repository;
 using MyStore.Repository.Context;
+using MyStore.WinApp.BaseForms;
 using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.Tools;
+using System;
 
 namespace MyStore.WinApp
 {
     public partial class EmployeeEdit : EditForm<Employee, EmployeeRepository>, IEmployeeForm
     {
-        public EmployeeEdit(AppDbContext context) : base (new EmployeeRepository(context))
+        public EmployeeEdit(AppDbContext context) : base(new EmployeeRepository(context))
         {
             InitializeComponent();
         }
@@ -121,7 +114,7 @@ namespace MyStore.WinApp
                 Edit();
                 Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 FormTools.ShowError("Ops", ex.Message);
             }

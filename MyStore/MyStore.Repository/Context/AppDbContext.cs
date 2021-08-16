@@ -22,7 +22,7 @@ namespace MyStore.Repository.Context
         public DbSet<OrderDetailsDTO> OrderDetails { get; set; }
         public DbSet<ProductDTO> Products { get; set; }
         public DbSet<ProductDetailsDTO> ProductDetails { get; set; }
-        public DbSet<ProviderDTO> Provider { get; set; }
+        public DbSet<ProviderDTO> Providers { get; set; }
         public DbSet<SellDTO> Sells { get; set; }
         public DbSet<SellDetailsDTO> SellDetails { get; set; }
         public DbSet<PermissionDTO> Permissions { get; set; }
@@ -35,9 +35,53 @@ namespace MyStore.Repository.Context
             #region DbConfiguration
 
             modelBuilder.Entity<UserDTO>().ToTable("Users");
-            modelBuilder.Entity<SellDetailsDTO>().ToTable("SellDetails");
-            modelBuilder.Entity<OrderDetailsDTO>().ToTable("OrderDetails");
             modelBuilder.Entity<ProductDetailsDTO>().ToTable("ProductDetails");
+
+            #region OrderDetails
+
+            modelBuilder.Entity<OrderDetailsDTO>()
+                .HasKey(od => new { od.ID, od.ProductID });
+
+            modelBuilder.Entity<OrderDetailsDTO>()
+                .HasOne(od => od.Order)
+                .WithMany(o => o.OrderDetails)
+                .HasForeignKey(od => od.ID);
+
+            modelBuilder.Entity<OrderDetailsDTO>()
+                .HasOne(od => od.Product)
+                .WithMany(p => p.OrderDetails)
+                .HasForeignKey(od => od.ProductID);
+
+            #endregion
+
+            #region SellDetails
+
+            modelBuilder.Entity<SellDetailsDTO>()
+                .HasKey(sd => new { sd.ID, sd.ProductID });
+
+            modelBuilder.Entity<SellDetailsDTO>()
+                .HasOne(sd => sd.Sell)
+                .WithMany(s => s.SellDetails)
+                .HasForeignKey(sd => sd.ID);
+
+            modelBuilder.Entity<SellDetailsDTO>()
+                .HasOne(sd => sd.Product)
+                .WithMany(p => p.SellDetails)
+                .HasForeignKey(sd => sd.ProductID);
+
+            #endregion
+
+            #region ProductDetails
+
+            modelBuilder.Entity<ProductDetailsDTO>()
+                .HasKey(pd => new { pd.ID, pd.Valid });
+
+            modelBuilder.Entity<ProductDetailsDTO>()
+                .HasOne(pd => pd.Product)
+                .WithMany(p => p.ProductDetails)
+                .HasForeignKey(od => od.ID);
+
+            #endregion
 
             #region UserGroups
 
