@@ -12,6 +12,7 @@ using MyStore.Repository;
 using MyStore.Repository.Context;
 using MyStore.WinApp.BaseForms;
 using MyStore.WinApp.Interfaces;
+using MyStore.WinApp.LocalData;
 using MyStore.WinApp.Tools;
 
 namespace MyStore.WinApp
@@ -21,7 +22,6 @@ namespace MyStore.WinApp
         public UserAdd(AppDbContext context) : base(new UserRepository(context))
         {
             InitializeComponent();
-            FormTools.LoadRelatedData(_repository, employeeBox);
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -35,6 +35,12 @@ namespace MyStore.WinApp
             {
                 FormTools.ShowError("Ops", ex.Message);
             }
+        }
+
+        protected void LoadRelatedData()
+        {
+            //TODO: To Array here !
+            employeeBox.Items.AddRange(_repository.GetEmployees(LocalStorage.User).ToArray());
         }
 
         private void userTxt_TextChanged(object sender, EventArgs e)

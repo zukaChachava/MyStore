@@ -6,10 +6,11 @@ using System.Data;
 using MyStore.Repository.Context;
 using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.Tools;
+using MyStore.WinApp.BaseForms;
 
 namespace MyStore.WinApp
 {
-    public partial class UserGroupAdd : AddForm<User, UserRepository>, IUserGroupsForm
+    public partial class UserGroupAdd : AddForm<User, UserRepository>
     {
         public UserGroupAdd(AppDbContext context) : base(new UserRepository(context))
         {
@@ -17,30 +18,9 @@ namespace MyStore.WinApp
             LoadUsers();
         }
 
-        public int Id
-        {
-            get
-            {
-                return (userBox.SelectedItem as ComboBoxItem).Id;
-            }
-        }
-
-        public bool Admin => adminBox.Checked;
-
-        public bool Cashier => cashierBox.Checked;
-
-        public bool Manager => managerBox.Checked;
-
-        public bool SupplyManager => supllyManagerBox.Checked;
-
         protected void LoadUsers()
         {
             
-        }
-
-        protected override User LoadModel()
-        {
-            return null; //FormTools.ReadInputModel(this);
         }
 
         private void addBtn_Click(object sender, EventArgs e)

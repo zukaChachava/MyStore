@@ -5,106 +5,27 @@ using MyStore.WinApp.BaseForms;
 using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.Tools;
 using System;
+using System.Windows.Forms;
 
 namespace MyStore.WinApp
 {
-    public partial class EmployeeEdit : EditForm<Employee, EmployeeRepository>, IEmployeeForm
+    public partial class EmployeeEdit : EditForm<Employee, EmployeeRepository>
     {
         public EmployeeEdit(AppDbContext context) : base(new EmployeeRepository(context))
         {
             InitializeComponent();
         }
 
-        public int Id
-        {
-            get
-            {
-                return (idBox.SelectedItem as ComboBoxItem).Id;
-            }
-        }
-
-        public string FirstName
-        {
-            get
-            {
-                return nameTxt.Text;
-            }
-        }
-
-        public string LastName
-        {
-            get
-            {
-                return lastnameTxt.Text;
-            }
-        }
-
-        public string PersonalId
-        {
-            get
-            {
-                return personalTxt.Text;
-            }
-        }
-
-        public string Phone
-        {
-            get
-            {
-                return phoneTxt.Text;
-            }
-        }
-
-        public string Email
-        {
-            get
-            {
-                return emailTxt.Text;
-            }
-        }
-
-        public string HomeAddress
-        {
-            get
-            {
-                return adressTxt.Text;
-            }
-        }
-
-        public DateTime? StartJob
-        {
-            get
-            {
-                return Convert.ToDateTime(dateBox.Text);
-            }
-        }
-
         protected override void LoadSelectedModel()
         {
-            IListForm listForm = (Owner as MainForm).ActiveMdiChild as IListForm;
-
-            if (listForm == null || listForm.GetType() != typeof(Employee))
-                Abort();
-
-            //Employee model = _repository.Get(listForm.GetSelectedId());
-            //LoadModel(model);
-
-            void LoadModel(Employee model)
-            {
-                idBox.Items.Add(new ComboBoxItem() { Id = model.ID });
-                nameTxt.Text = model.Firstname;
-                lastnameTxt.Text = model.Lastname;
-                personalTxt.Text = model.PersonalID;
-                phoneTxt.Text = model.Phone;
-                emailTxt.Text = model.Email;
-                adressTxt.Text = model.HomeAddress;
-                dateBox.Text = model.StartJob.ToString();
-            }
-        }
-
-        protected override Employee ReadModel()
-        {
-            return FormTools.ReadInputModel(this);
+            FormTools.LoadComboBoxID(idBox, Model.ID);
+            nameTxt.Text = Model.Firstname;
+            lastnameTxt.Text = Model.Lastname;
+            personalTxt.Text = Model.PersonalID;
+            phoneTxt.Text = Model.Phone;
+            emailTxt.Text = Model.Email;
+            adressTxt.Text = Model.HomeAddress;
+            dateBox.Value = Model.StartJob ?? DateTime.Now;
         }
 
         private void editBtn_Click(object sender, EventArgs e)
@@ -118,6 +39,46 @@ namespace MyStore.WinApp
             {
                 FormTools.ShowError("Ops", ex.Message);
             }
+        }
+
+        private void idBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Model.ID = (int)idBox.SelectedItem;
+        }
+
+        private void nameTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Firstname = nameTxt.Text;
+        }
+
+        private void lastnameTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Lastname = lastnameTxt.Text;
+        }
+
+        private void personalTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.PersonalID = personalTxt.Text;
+        }
+
+        private void phoneTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Phone = phoneTxt.Text;
+        }
+
+        private void emailTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Email = emailTxt.Text;
+        }
+
+        private void adressTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.HomeAddress = adressTxt.Text;
+        }
+
+        private void dateBox_ValueChanged(object sender, EventArgs e)
+        {
+            Model.StartJob = dateBox.Value;
         }
     }
 }

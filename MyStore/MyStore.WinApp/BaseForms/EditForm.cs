@@ -1,4 +1,5 @@
-﻿using MyStore.WinApp.Interfaces;
+﻿using MyStore.WinApp.Exceptions;
+using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.LocalData;
 using MyStore.WinApp.Tools;
 using System;
@@ -13,9 +14,11 @@ using System.Windows.Forms;
 
 namespace MyStore.WinApp.BaseForms
 {
-    public abstract partial class EditForm<TModel, TRepo> : Form
+    public abstract partial class EditForm<TModel, TRepo> : Form, IModelForm<TModel>
     {
         protected TRepo _repository;
+
+        public TModel Model { get; protected set; }
 
         public EditForm(TRepo repository)
         {
@@ -24,36 +27,28 @@ namespace MyStore.WinApp.BaseForms
             FormBorderStyle = FormBorderStyle.FixedDialog;
         }
 
-        protected virtual TModel GetSelectedModel()
+        protected virtual void GetSelectedModel()
         {
-            IListForm<TModel> listForm = null;
-            Form activeChild = (Owner as MainForm).ActiveMdiChild;
-
-            if (activeChild == null || activeChild.GetType() != typeof(TModel))
+            try
             {
-                Abort();
-                return null;
+                Model = FormTools.GetSelectedModel<TModel>(Owner as MainForm);
             }
-
-            listForm = activeChild as IListForm<TModel>;
-            return listForm.GetSelectedModel();
+            catch (ListFormException ex)
+            {
+                FormTools.ShowInfo("Ops", ex.Message);
+            }
+            catch (Exception ex)
+            {
+                FormTools.ShowError("Critical Error", ex.Message);
+            }
         }
 
         protected virtual void Edit()
         {
-            TModel model = ReadModel();
-            _repository.Update(LocalStorage.User, model);
-            if (model == LocalStorage.User)
+            _repository.Update(LocalStorage.User, Model);
+            if (Model == LocalStorage.User)
                 Application.Restart();
         }
-
-        protected virtual void Abort()
-        {
-            FormTools.ShowInfo("Ops", "You should choose relevant List Window");
-            Close();
-        }
-
-        protected abstract TModel ReadModel();
 
         protected abstract void LoadSelectedModel();
 

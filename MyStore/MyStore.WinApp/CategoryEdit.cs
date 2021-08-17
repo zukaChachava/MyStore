@@ -9,30 +9,17 @@ using MyStore.WinApp.Tools;
 
 namespace MyStore.WinApp
 {
-    public partial class CategoryEdit : EditForm<Category, CategoryRepository>, ICategoryForm
+    public partial class CategoryEdit : EditForm<Category, CategoryRepository>
     {
         public CategoryEdit(AppDbContext context) : base (new CategoryRepository(context))
         {
             InitializeComponent();
         }
 
-        public Category Category { get; private set; }
-
-        protected override Category ReadModel()
-        {
-            return FormTools.ReadInputModel(this);
-        }
-
         protected override void LoadSelectedModel()
         {
-            Category model = GetSelectedModel();
-            if(model != null)
-            {
-                idBox.Items.Add(new ComboBoxItem() { Id = model.ID });
-                idBox.SelectedIndex = 0;
-                idBox.Enabled = false;
-                categoryTxt.Text = model.Name;
-            }
+            FormTools.LoadComboBoxID(idBox, Model.ID);
+            categoryTxt.Text = Model.Name;
         }
 
         private void editBtn_Click(object sender, EventArgs e)
@@ -46,6 +33,16 @@ namespace MyStore.WinApp
             {
                 FormTools.ShowError("Ops", ex.Message);
             }
+        }
+
+        private void idBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Model.ID = (int)idBox.SelectedItem;
+        }
+
+        private void categoryTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Name = categoryTxt.Text;
         }
     }
 }

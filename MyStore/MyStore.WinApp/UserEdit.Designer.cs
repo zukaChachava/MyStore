@@ -48,6 +48,7 @@ namespace MyStore.WinApp
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(121, 23);
             this.idBox.TabIndex = 13;
+            this.idBox.SelectedIndexChanged += new System.EventHandler(this.idBox_SelectedIndexChanged);
             // 
             // passwordTxt
             // 
@@ -55,6 +56,7 @@ namespace MyStore.WinApp
             this.passwordTxt.Name = "passwordTxt";
             this.passwordTxt.Size = new System.Drawing.Size(134, 23);
             this.passwordTxt.TabIndex = 12;
+            this.passwordTxt.TextChanged += new System.EventHandler(this.passwordTxt_TextChanged);
             // 
             // userTxt
             // 
@@ -62,6 +64,7 @@ namespace MyStore.WinApp
             this.userTxt.Name = "userTxt";
             this.userTxt.Size = new System.Drawing.Size(134, 23);
             this.userTxt.TabIndex = 11;
+            this.userTxt.TextChanged += new System.EventHandler(this.userTxt_TextChanged);
             // 
             // label2
             // 

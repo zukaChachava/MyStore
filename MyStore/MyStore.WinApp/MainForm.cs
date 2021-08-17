@@ -8,6 +8,7 @@ using MyStore.WinApp.Interfaces;
 using FormExtensions;
 using MyStore.WinApp.LocalData;
 using System.Linq;
+using MyStore.WinApp.BaseForms;
 
 namespace MyStore.WinApp
 {

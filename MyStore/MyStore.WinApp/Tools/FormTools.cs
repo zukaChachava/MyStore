@@ -3,6 +3,7 @@ using MyStore.Repository;
 using System.Windows.Forms;
 using System.Data;
 using MyStore.WinApp.Interfaces;
+using MyStore.WinApp.Exceptions;
 
 namespace MyStore.WinApp.Tools
 {
@@ -18,73 +19,38 @@ namespace MyStore.WinApp.Tools
             MessageBox.Show(text, header, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public static Employee ReadInputModel(IEmployeeForm form) 
+        public static void LoadComboBoxID(ComboBox box, int id, bool enabled = false)
         {
-            return new Employee()
-            {
-                ID = form.Id,
-                Firstname = form.FirstName,
-                Lastname = form.LastName,
-                PersonalID = form.PersonalId,
-                Phone = form.Phone,
-                Email = form.Email,
-                HomeAddress = form.HomeAddress,
-                StartJob = form.StartJob
-            };
+            box.Items.Clear();
+            box.Items.Add(id);
+            box.SelectedIndex = 0;
+            box.Enabled = enabled;
         }
 
-        public static User ReadInputModel(IUserForm form)
+        public static void LoadComboBoxID<TModel>(ComboBox box, TModel model, bool enabled = false) where TModel : BaseModel
         {
-            return new User()
-            {
-                ID = form.Id,
-                Username = form.Username,
-                Password = form.Password
-            };
+            box.Items.Clear();
+            box.Items.Add(model);
+            box.SelectedIndex = 0;
+            box.Enabled = enabled;
         }
 
-        public static Category ReadInputModel(ICategoryForm form)
+        public static TModel GetSelectedModel<TModel>(MainForm mainForm) where TModel : BaseModel
         {
-            return new Category()
-            {
-                ID = form.Id,
-                Name = form.CategoryName
-            };
+            IListForm<TModel> listForm = null;
+            Form activeChild = mainForm.ActiveMdiChild;
+
+            if (activeChild == null || activeChild.GetType() != typeof(TModel))
+                throw new ListFormException("Choose relevant window");
+
+            listForm = activeChild as IListForm<TModel>;
+            return listForm.GetSelectedModel();
         }
 
-        public static Product ReadInputModel(IProductForm form)
+        public static void AbortCreatingWindow(Form form)
         {
-            return new Product()
-            {
-                ID = form.Id,
-                CategoryID = form.CategoryId,
-                Name = form.ProductionName,
-                Price = form.Price
-            };
-        }
-
-        public static Provider ReadInputModel(IProviderForm form)
-        {
-            return new Provider()
-            {
-                ID = form.Id,
-                Name = form.ProviderName,
-                Phone = form.Phone,
-                Email = form.Email,
-                Location = form.Location
-            };
-        }
-
-        public static void LoadRelatedData(ProductRepository repository, ComboBox comboBox)
-        {
-            //foreach (DataRow row in repository.GetRelatedData()[0].Rows)
-            //    comboBox.Items.Add(new ComboBoxItem() { Id = (int)row["Id"], Name = row["Name"].ToString() });
-        }
-
-        public static void LoadRelatedData(UserRepository repository, ComboBox comboBox)
-        {
-            //foreach (DataRow row in repository.GetRelatedData()[0].Rows)
-            //    comboBox.Items.Add(new ComboBoxItem() { Id = (int)row["Id"], Name = $"{row["Firstname"]} {row["Lastname"]}" });
+            FormTools.ShowInfo("Ops", "You should choose relevant List Window");
+            form.Close();
         }
 
         public static int DeleteSelectedRow(DataGridView gridView)

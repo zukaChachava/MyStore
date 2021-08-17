@@ -48,9 +48,9 @@ namespace MyStore.WinApp
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(158, 24);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 15);
+            this.label4.Size = new System.Drawing.Size(18, 15);
             this.label4.TabIndex = 19;
-            this.label4.Text = "Product";
+            this.label4.Text = "ID";
             // 
             // idBox
             // 
@@ -60,6 +60,7 @@ namespace MyStore.WinApp
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(180, 23);
             this.idBox.TabIndex = 18;
+            this.idBox.SelectedIndexChanged += new System.EventHandler(this.idBox_SelectedIndexChanged);
             // 
             // editBtn
             // 
@@ -86,6 +87,7 @@ namespace MyStore.WinApp
             this.priceTxt.Name = "priceTxt";
             this.priceTxt.Size = new System.Drawing.Size(180, 23);
             this.priceTxt.TabIndex = 15;
+            this.priceTxt.TextChanged += new System.EventHandler(this.priceTxt_TextChanged);
             // 
             // nameTxt
             // 
@@ -93,6 +95,7 @@ namespace MyStore.WinApp
             this.nameTxt.Name = "nameTxt";
             this.nameTxt.Size = new System.Drawing.Size(180, 23);
             this.nameTxt.TabIndex = 14;
+            this.nameTxt.TextChanged += new System.EventHandler(this.nameTxt_TextChanged);
             // 
             // label2
             // 
@@ -120,6 +123,7 @@ namespace MyStore.WinApp
             this.categoryBox.Name = "categoryBox";
             this.categoryBox.Size = new System.Drawing.Size(180, 23);
             this.categoryBox.TabIndex = 11;
+            this.categoryBox.SelectedIndexChanged += new System.EventHandler(this.categoryBox_SelectedIndexChanged);
             // 
             // pictureBox1
             // 

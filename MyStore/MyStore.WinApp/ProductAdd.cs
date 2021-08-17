@@ -7,6 +7,8 @@ using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.Tools;
 using MyStore.Repository.Context;
 using MyStore.WinApp.BaseForms;
+using MyStore.WinApp.LocalData;
+using System.Linq;
 
 namespace MyStore.WinApp
 {
@@ -14,8 +16,7 @@ namespace MyStore.WinApp
     {
         public ProductAdd(AppDbContext context) : base(new ProductRepository(context))
         {
-            InitializeComponent();
-            FormTools.LoadRelatedData(_repository, categoryBox);
+            InitializeComponent();;
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -29,6 +30,12 @@ namespace MyStore.WinApp
             {
                 FormTools.ShowError("Ops", ex.Message);
             }
+        }
+
+        protected void LoadRelatedData()
+        {
+            // TODO: ToArray() Here
+            categoryBox.Items.AddRange(_repository.GetCategories(LocalStorage.User).ToArray());
         }
 
         private void categoryBox_SelectedIndexChanged(object sender, EventArgs e)

@@ -70,6 +70,7 @@ namespace MyStore.WinApp
             this.locationTxt.Name = "locationTxt";
             this.locationTxt.Size = new System.Drawing.Size(184, 23);
             this.locationTxt.TabIndex = 17;
+            this.locationTxt.TextChanged += new System.EventHandler(this.locationTxt_TextChanged);
             // 
             // label3
             // 
@@ -95,6 +96,7 @@ namespace MyStore.WinApp
             this.emailTxt.Name = "emailTxt";
             this.emailTxt.Size = new System.Drawing.Size(149, 23);
             this.emailTxt.TabIndex = 14;
+            this.emailTxt.TextChanged += new System.EventHandler(this.emailTxt_TextChanged);
             // 
             // phoneTxt
             // 
@@ -102,6 +104,7 @@ namespace MyStore.WinApp
             this.phoneTxt.Name = "phoneTxt";
             this.phoneTxt.Size = new System.Drawing.Size(149, 23);
             this.phoneTxt.TabIndex = 13;
+            this.phoneTxt.TextChanged += new System.EventHandler(this.phoneTxt_TextChanged);
             // 
             // nameTxt
             // 
@@ -109,6 +112,7 @@ namespace MyStore.WinApp
             this.nameTxt.Name = "nameTxt";
             this.nameTxt.Size = new System.Drawing.Size(184, 23);
             this.nameTxt.TabIndex = 12;
+            this.nameTxt.TextChanged += new System.EventHandler(this.nameTxt_TextChanged);
             // 
             // label1
             // 
@@ -137,15 +141,16 @@ namespace MyStore.WinApp
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(186, 23);
             this.idBox.TabIndex = 20;
+            this.idBox.SelectedIndexChanged += new System.EventHandler(this.idBox_SelectedIndexChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(321, 61);
+            this.label5.Location = new System.Drawing.Point(335, 61);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 15);
+            this.label5.Size = new System.Drawing.Size(18, 15);
             this.label5.TabIndex = 21;
-            this.label5.Text = "Provider";
+            this.label5.Text = "ID";
             // 
             // ProviderEdit
             // 

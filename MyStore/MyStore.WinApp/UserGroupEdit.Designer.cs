@@ -60,6 +60,7 @@ namespace MyStore.WinApp
             this.supllyManagerBox.TabIndex = 14;
             this.supllyManagerBox.Text = "Supply Manager";
             this.supllyManagerBox.UseVisualStyleBackColor = true;
+            this.supllyManagerBox.CheckedChanged += new System.EventHandler(this.supllyManagerBox_CheckedChanged);
             // 
             // managerBox
             // 
@@ -70,6 +71,7 @@ namespace MyStore.WinApp
             this.managerBox.TabIndex = 13;
             this.managerBox.Text = "Manager";
             this.managerBox.UseVisualStyleBackColor = true;
+            this.managerBox.CheckedChanged += new System.EventHandler(this.managerBox_CheckedChanged);
             // 
             // cashierBox
             // 
@@ -80,6 +82,7 @@ namespace MyStore.WinApp
             this.cashierBox.TabIndex = 12;
             this.cashierBox.Text = "Cashier";
             this.cashierBox.UseVisualStyleBackColor = true;
+            this.cashierBox.CheckedChanged += new System.EventHandler(this.cashierBox_CheckedChanged);
             // 
             // adminBox
             // 
@@ -90,6 +93,7 @@ namespace MyStore.WinApp
             this.adminBox.TabIndex = 11;
             this.adminBox.Text = "Admin";
             this.adminBox.UseVisualStyleBackColor = true;
+            this.adminBox.CheckedChanged += new System.EventHandler(this.adminBox_CheckedChanged);
             // 
             // label1
             // 
@@ -108,6 +112,7 @@ namespace MyStore.WinApp
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(167, 23);
             this.idBox.TabIndex = 9;
+            this.idBox.SelectedIndexChanged += new System.EventHandler(this.idBox_SelectedIndexChanged);
             // 
             // pictureBox1
             // 

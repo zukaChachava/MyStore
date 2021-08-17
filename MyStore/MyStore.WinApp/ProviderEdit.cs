@@ -10,83 +10,26 @@ using System.Windows.Forms;
 using MyStore.Domain.Models;
 using MyStore.Repository;
 using MyStore.Repository.Context;
+using MyStore.WinApp.BaseForms;
 using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.Tools;
 
 namespace MyStore.WinApp
 {
-    public partial class ProviderEdit : EditForm<Provider, ProviderRepository>, IProviderForm
+    public partial class ProviderEdit : EditForm<Provider, ProviderRepository>
     {
         public ProviderEdit(AppDbContext context) : base(new ProviderRepository(context))
         {
             InitializeComponent();
         }
 
-        public int Id
-        {
-            get
-            {
-                return (idBox.SelectedItem as ComboBoxItem).Id;
-            }
-        }
-
-        public string ProviderName
-        {
-            get
-            {
-                return nameTxt.Text;
-            }
-        }
-
-        public string Phone
-        {
-            get
-            {
-                return phoneTxt.Text;
-            }
-        }
-
-        public string Email
-        {
-            get
-            {
-                return emailTxt.Text;
-            }
-        }
-
-        string IProviderForm.Location
-        {
-            get
-            {
-                return locationTxt.Text;
-            }
-        }
-
-        protected override Provider ReadModel()
-        {
-            return FormTools.ReadInputModel(this);
-        }
-
         protected override void LoadSelectedModel()
         {
-            IListForm listForm = (Owner as MainForm).ActiveMdiChild as IListForm;
-
-            if (listForm == null || listForm.GetType() != typeof(ProviderList))
-                Abort();
-
-            //Provider model = _repository.Get(listForm.GetSelectedId());
-            //LoadModel(model);
-
-            void LoadModel(Provider model)
-            {
-                idBox.Items.Add(new ComboBoxItem() { Id = model.ID });
-                idBox.SelectedIndex = 0;
-                idBox.Enabled = false;
-                nameTxt.Text = model.Name;
-                phoneTxt.Text = model.Phone;
-                emailTxt.Text = model.Email;
-                locationTxt.Text = model.Location;
-            }
+            FormTools.LoadComboBoxID(idBox, Model.ID);
+            nameTxt.Text = Model.Name;
+            phoneTxt.Text = Model.Phone;
+            emailTxt.Text = Model.Email;
+            locationTxt.Text = Model.Location;
         }
 
         private void editBtn_Click(object sender, EventArgs e)
@@ -100,6 +43,31 @@ namespace MyStore.WinApp
             {
                 FormTools.ShowError("Ops", ex.Message);
             }
+        }
+
+        private void idBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Model.ID = (int)idBox.SelectedItem;
+        }
+
+        private void nameTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Name = nameTxt.Text;
+        }
+
+        private void phoneTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Phone = phoneTxt.Text;
+        }
+
+        private void emailTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Email = emailTxt.Text;
+        }
+
+        private void locationTxt_TextChanged(object sender, EventArgs e)
+        {
+            Model.Location = locationTxt.Text;
         }
     }
 }

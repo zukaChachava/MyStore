@@ -57,6 +57,7 @@ namespace MyStore.WinApp
             this.dateBox.Name = "dateBox";
             this.dateBox.Size = new System.Drawing.Size(246, 23);
             this.dateBox.TabIndex = 29;
+            this.dateBox.ValueChanged += new System.EventHandler(this.dateBox_ValueChanged);
             // 
             // pictureBox1
             // 
@@ -83,6 +84,7 @@ namespace MyStore.WinApp
             this.adressTxt.Name = "adressTxt";
             this.adressTxt.Size = new System.Drawing.Size(202, 23);
             this.adressTxt.TabIndex = 26;
+            this.adressTxt.TextChanged += new System.EventHandler(this.adressTxt_TextChanged);
             // 
             // label5
             // 
@@ -108,6 +110,7 @@ namespace MyStore.WinApp
             this.emailTxt.Name = "emailTxt";
             this.emailTxt.Size = new System.Drawing.Size(147, 23);
             this.emailTxt.TabIndex = 23;
+            this.emailTxt.TextChanged += new System.EventHandler(this.emailTxt_TextChanged);
             // 
             // phoneTxt
             // 
@@ -115,6 +118,7 @@ namespace MyStore.WinApp
             this.phoneTxt.Name = "phoneTxt";
             this.phoneTxt.Size = new System.Drawing.Size(147, 23);
             this.phoneTxt.TabIndex = 22;
+            this.phoneTxt.TextChanged += new System.EventHandler(this.phoneTxt_TextChanged);
             // 
             // label3
             // 
@@ -131,6 +135,7 @@ namespace MyStore.WinApp
             this.personalTxt.Name = "personalTxt";
             this.personalTxt.Size = new System.Drawing.Size(202, 23);
             this.personalTxt.TabIndex = 20;
+            this.personalTxt.TextChanged += new System.EventHandler(this.personalTxt_TextChanged);
             // 
             // lastnameTxt
             // 
@@ -138,6 +143,7 @@ namespace MyStore.WinApp
             this.lastnameTxt.Name = "lastnameTxt";
             this.lastnameTxt.Size = new System.Drawing.Size(147, 23);
             this.lastnameTxt.TabIndex = 19;
+            this.lastnameTxt.TextChanged += new System.EventHandler(this.lastnameTxt_TextChanged);
             // 
             // nameTxt
             // 
@@ -145,6 +151,7 @@ namespace MyStore.WinApp
             this.nameTxt.Name = "nameTxt";
             this.nameTxt.Size = new System.Drawing.Size(147, 23);
             this.nameTxt.TabIndex = 18;
+            this.nameTxt.TextChanged += new System.EventHandler(this.nameTxt_TextChanged);
             // 
             // label2
             // 
@@ -182,6 +189,7 @@ namespace MyStore.WinApp
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(147, 23);
             this.idBox.TabIndex = 30;
+            this.idBox.SelectedIndexChanged += new System.EventHandler(this.idBox_SelectedIndexChanged);
             // 
             // label7
             // 

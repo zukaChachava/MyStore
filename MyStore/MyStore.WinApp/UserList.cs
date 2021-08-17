@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MyStore.Repository;
 using MyStore.Domain.Models;
 using MyStore.Repository.Context;
+using MyStore.WinApp.BaseForms;
 
 namespace MyStore.WinApp
 {

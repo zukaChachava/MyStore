@@ -64,6 +64,7 @@ namespace MyStore.WinApp
             this.categoryTxt.Name = "categoryTxt";
             this.categoryTxt.Size = new System.Drawing.Size(186, 23);
             this.categoryTxt.TabIndex = 5;
+            this.categoryTxt.TextChanged += new System.EventHandler(this.categoryTxt_TextChanged);
             // 
             // pictureBox1
             // 
@@ -83,6 +84,7 @@ namespace MyStore.WinApp
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(185, 23);
             this.idBox.TabIndex = 8;
+            this.idBox.SelectedIndexChanged += new System.EventHandler(this.idBox_SelectedIndexChanged);
             // 
             // label2
             // 

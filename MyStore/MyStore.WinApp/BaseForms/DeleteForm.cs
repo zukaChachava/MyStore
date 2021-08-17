@@ -13,12 +13,15 @@ using MyStore.Repository.Context;
 using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.Tools;
 using MyStore.WinApp.LocalData;
+using MyStore.WinApp.Exceptions;
 
 namespace MyStore.WinApp.BaseForms
 {
-    public abstract partial class DeleteForm<TModel, TRepo> : Form
+    public abstract partial class DeleteForm<TModel, TRepo> : Form, IModelForm<TModel>
     {
         protected TRepo _repository;
+
+        public TModel Model { get; protected set; }
 
         public DeleteForm(TRepo repository)
         {
@@ -27,24 +30,38 @@ namespace MyStore.WinApp.BaseForms
             FormBorderStyle = FormBorderStyle.FixedDialog;
         }
 
+        protected virtual void GetSelectedModel()
+        {
+            try
+            {
+                Model = FormTools.GetSelectedModel<TModel>(Owner as MainForm);
+            }
+            catch (ListFormException ex)
+            {
+                FormTools.ShowInfo("Ops", ex.Message);
+            }
+            catch (Exception ex)
+            {
+                FormTools.ShowError("Critical Error", ex.Message);
+            }
+        }
+
         protected void Delete()
         {
-            _repository.Delete(LocalStorage.User, LoadModel());
+            _repository.Delete(LocalStorage.User, Model);
         }
-
-        protected abstract TModel LoadModel();
 
         protected abstract void LoadSelectedModel();
-
-        private void DeleteForm_Load(object sender, EventArgs e)
-        {
-            LoadSelectedModel();
-        }
 
         protected virtual void Abort()
         {
             FormTools.ShowInfo("Ops", "You should choose relevant List Window");
             Close();
+        }
+
+        private void DeleteForm_Load(object sender, EventArgs e)
+        {
+            LoadSelectedModel();
         }
     }
 }
