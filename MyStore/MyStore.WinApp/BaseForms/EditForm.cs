@@ -36,10 +36,13 @@ namespace MyStore.WinApp.BaseForms
             catch (ListFormException ex)
             {
                 FormTools.ShowInfo("Ops", ex.Message);
+                Close();
+                Dispose();
             }
             catch (Exception ex)
             {
                 FormTools.ShowError("Critical Error", ex.Message);
+
             }
         }
 
@@ -54,6 +57,9 @@ namespace MyStore.WinApp.BaseForms
 
         private void EditForm_Load(object sender, EventArgs e)
         {
+            GetSelectedModel();
+            if (IsDisposed)
+                return;
             LoadSelectedModel();
         }
     }

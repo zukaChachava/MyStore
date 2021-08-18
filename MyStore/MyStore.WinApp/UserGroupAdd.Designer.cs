@@ -59,6 +59,7 @@ namespace MyStore.WinApp
             this.userBox.Name = "userBox";
             this.userBox.Size = new System.Drawing.Size(167, 23);
             this.userBox.TabIndex = 1;
+            this.userBox.SelectedIndexChanged += new System.EventHandler(this.userBox_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -78,6 +79,7 @@ namespace MyStore.WinApp
             this.adminBox.TabIndex = 3;
             this.adminBox.Text = "Admin";
             this.adminBox.UseVisualStyleBackColor = true;
+            this.adminBox.CheckedChanged += new System.EventHandler(this.adminBox_CheckedChanged);
             // 
             // cashierBox
             // 
@@ -88,6 +90,7 @@ namespace MyStore.WinApp
             this.cashierBox.TabIndex = 4;
             this.cashierBox.Text = "Cashier";
             this.cashierBox.UseVisualStyleBackColor = true;
+            this.cashierBox.CheckedChanged += new System.EventHandler(this.cashierBox_CheckedChanged);
             // 
             // managerBox
             // 
@@ -98,6 +101,7 @@ namespace MyStore.WinApp
             this.managerBox.TabIndex = 5;
             this.managerBox.Text = "Manager";
             this.managerBox.UseVisualStyleBackColor = true;
+            this.managerBox.CheckedChanged += new System.EventHandler(this.managerBox_CheckedChanged);
             // 
             // supllyManagerBox
             // 
@@ -108,6 +112,7 @@ namespace MyStore.WinApp
             this.supllyManagerBox.TabIndex = 6;
             this.supllyManagerBox.Text = "Supply Manager";
             this.supllyManagerBox.UseVisualStyleBackColor = true;
+            this.supllyManagerBox.CheckedChanged += new System.EventHandler(this.supllyManagerBox_CheckedChanged);
             // 
             // addBtn
             // 
@@ -135,6 +140,7 @@ namespace MyStore.WinApp
             this.Name = "UserGroupAdd";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add User Permission";
+            this.Load += new System.EventHandler(this.UserGroupAdd_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

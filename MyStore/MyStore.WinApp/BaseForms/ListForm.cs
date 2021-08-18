@@ -91,7 +91,7 @@ namespace MyStore.WinApp.BaseForms
 
         public virtual void RefreshData()
         {
-            _data = _repository.Select(LocalStorage.User);
+            Data = _repository.Select(LocalStorage.User);
         }
 
         public Action<object, EventArgs> AddFunction { get; set; }
@@ -128,7 +128,7 @@ namespace MyStore.WinApp.BaseForms
 
         public TModel GetSelectedModel()
         {
-            throw new NotImplementedException();
+            return Data.ElementAt(GridView.SelectedRows[0].Index);
         }
     }
 }

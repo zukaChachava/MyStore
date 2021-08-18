@@ -11,6 +11,7 @@ using MyStore.Domain.Models;
 using MyStore.Repository.Context;
 using MyStore.Repository;
 using MyStore.WinApp.BaseForms;
+using MyStore.WinApp.LocalData;
 
 namespace MyStore.WinApp
 {

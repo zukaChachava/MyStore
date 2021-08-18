@@ -39,10 +39,14 @@ namespace MyStore.WinApp.BaseForms
             catch (ListFormException ex)
             {
                 FormTools.ShowInfo("Ops", ex.Message);
+                Close();
+                Dispose();
             }
             catch (Exception ex)
             {
                 FormTools.ShowError("Critical Error", ex.Message);
+                Close();
+                Dispose();
             }
         }
 
@@ -61,6 +65,9 @@ namespace MyStore.WinApp.BaseForms
 
         private void DeleteForm_Load(object sender, EventArgs e)
         {
+            GetSelectedModel();
+            if (IsDisposed)
+                return;
             LoadSelectedModel();
         }
     }

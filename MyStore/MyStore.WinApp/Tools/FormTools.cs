@@ -40,7 +40,7 @@ namespace MyStore.WinApp.Tools
             IListForm<TModel> listForm = null;
             Form activeChild = mainForm.ActiveMdiChild;
 
-            if (activeChild == null || activeChild.GetType() != typeof(TModel))
+            if (activeChild == null || activeChild is not IListForm<TModel>)
                 throw new ListFormException("Choose relevant window");
 
             listForm = activeChild as IListForm<TModel>;

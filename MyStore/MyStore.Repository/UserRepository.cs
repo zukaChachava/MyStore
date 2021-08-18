@@ -39,14 +39,6 @@ namespace MyStore.Repository
             return _employeeRepository.Value.Select(user);
         }
 
-        protected override MapperConfiguration MapperConfiguration()
-        {
-            return new MapperConfiguration(cfg =>
-                cfg.CreateMap<User, UserDTO>()
-                .ForSourceMember(u => u.Password, ud => ud.DoNotValidate())
-                .ReverseMap());
-        }
-
         public override void Delete(User user, User model)
         {
             if (!HasPermision(user, _repositoryPermission.Delete))

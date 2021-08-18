@@ -24,7 +24,7 @@ namespace MyStore.WinApp.BaseForms
             FormBorderStyle = FormBorderStyle.FixedSingle;
         }
 
-        public TModel Model { get; private set; }
+        public TModel Model { get; protected set; }
 
         public virtual void Add()
         {
