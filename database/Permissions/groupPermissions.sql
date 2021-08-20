@@ -63,6 +63,9 @@ values (1, 34);
 Insert into GroupPermissions (GroupID, PermissionCode)
 values (1, 32);
 
+Insert into GroupPermissions (GroupID, PermissionCode)
+values (1, 41);
+
 -- Cashier
 
 Insert into GroupPermissions (GroupID, PermissionCode)

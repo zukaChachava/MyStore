@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 namespace MyStore.Domain.DTO
 {
     [Table("Groups")]
-    public class GroupDTO : BaseDTO
+    public class GroupsDTO : BaseDTO
     {
         [Required, MaxLength(20)]
         public string Name { get; set; }

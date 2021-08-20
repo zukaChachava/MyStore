@@ -26,7 +26,7 @@ namespace MyStore.Repository.Context
         public DbSet<SellDTO> Sells { get; set; }
         public DbSet<SellDetailsDTO> SellDetails { get; set; }
         public DbSet<PermissionDTO> Permissions { get; set; }
-        public DbSet<GroupDTO> Groups { get; set; }
+        public DbSet<GroupsDTO> Groups { get; set; }
         public DbSet<GroupPermissionsDTO> GroupPermissions { get; set; }
         public DbSet<UserGroupsDTO> UserGroups { get; set; }
 
@@ -177,7 +177,7 @@ namespace MyStore.Repository.Context
 
             #region Groups
 
-            modelBuilder.Entity<GroupDTO>()
+            modelBuilder.Entity<GroupsDTO>()
                 .HasIndex(g => g.Name)
                 .IsUnique(true)
                 .IsClustered(false);

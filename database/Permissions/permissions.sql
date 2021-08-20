@@ -32,6 +32,9 @@ values (9, 'See SellDetails List');
 insert into Permissions(PermissionCode, Description)
 values (10, 'See UserGroups List')
 
+insert into Permissions(PermissionCode, Description)
+values (41, 'See GroupsList')
+
 -- Add Permissions
 insert into Permissions (PermissionCode, Description)
 values (11, 'Add Employee');

@@ -35,7 +35,7 @@ namespace MyStore.Repository
             return _mapper.Map<TModel>(_dbSet.Single(x => x.ID == Id));
         }
 
-        protected virtual TDTO Get(TModel model)
+        internal virtual TDTO Get(TModel model)
         {
             return _dbSet.Single(m => m.ID == model.ID);
         }
@@ -49,6 +49,13 @@ namespace MyStore.Repository
         }
 
         public virtual IEnumerable<TModel> Select(User user, Predicate<TModel> predicate) => Select(user).Where(x => predicate(x));
+
+        internal virtual IEnumerable<TModel> Select(Predicate<TDTO> predicate)
+        {
+            return _dbSet
+                .Where(dto => predicate(dto))
+                .Select(dto => _mapper.Map<TModel>(dto));
+        }
 
         public virtual TModel Add(User user, TModel model)
         {

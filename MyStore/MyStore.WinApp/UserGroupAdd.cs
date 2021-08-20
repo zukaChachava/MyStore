@@ -33,6 +33,8 @@ namespace MyStore.WinApp
             {
                 Add();
                 Close();
+                if (LocalStorage.User.Equals(Model))
+                    Application.Restart();
             }
             catch(Exception ex)
             {
@@ -48,28 +50,53 @@ namespace MyStore.WinApp
 
         private void adminBox_CheckedChanged(object sender, EventArgs e)
         {
-            //if(adminBox.Checked)
-            //    _admin = _repository.get
+            if (adminBox.Checked)
+                _admin = _repository.GetAdminGroup();
+            else
+                _admin = null;
         }
 
         private void managerBox_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (managerBox.Checked)
+                _manager = _repository.GetManagerGroup();
+            else
+                _manager = null;
         }
 
         private void cashierBox_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (cashierBox.Checked)
+                _cashier = _repository.GetCashierGroup();
+            else
+                _cashier = null;
         }
 
         private void supllyManagerBox_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (supllyManagerBox.Checked)
+                _supplyManager = _repository.GetSupplyManager();
+            else
+                _supplyManager = null;
         }
 
         private void UserGroupAdd_Load(object sender, EventArgs e)
         {
             addBtn.Enabled = false;
+        }
+
+        public override void Add()
+        {
+            try
+            {
+                _repository.ChangeUserGroups(LocalStorage.User, Model, _admin, _manager, _cashier, _supplyManager);
+                if (Model == LocalStorage.User)
+                    Application.Restart();
+            }
+            catch(Exception ex)
+            {
+                FormTools.ShowError("Ops", ex.Message);
+            }
         }
     }
 }

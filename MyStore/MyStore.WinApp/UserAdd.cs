@@ -22,6 +22,8 @@ namespace MyStore.WinApp
         public UserAdd(AppDbContext context) : base(new UserRepository(context))
         {
             InitializeComponent();
+            LoadEmployees();
+            addBtn.Enabled = false;
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -37,10 +39,11 @@ namespace MyStore.WinApp
             }
         }
 
-        protected void LoadRelatedData()
+        protected void LoadEmployees()
         {
             //TODO: To Array here !
-            employeeBox.Items.AddRange(_repository.GetEmployees(LocalStorage.User).ToArray());
+            var x = _repository.GetEmployees(LocalStorage.User);
+            employeeBox.Items.AddRange(x.ToArray());
         }
 
         private void userTxt_TextChanged(object sender, EventArgs e)
@@ -51,6 +54,12 @@ namespace MyStore.WinApp
         private void passwordTxt_TextChanged(object sender, EventArgs e)
         {
             Model.Password = passwordTxt.Text;
+        }
+
+        private void employeeBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Model = (employeeBox.SelectedItem as Employee).GenerateUser();
+            addBtn.Enabled = true;
         }
     }
 }

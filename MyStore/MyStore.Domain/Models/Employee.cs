@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 
 namespace MyStore.Domain.Models
 {
@@ -19,6 +20,21 @@ namespace MyStore.Domain.Models
         public DateTime? StartJob { get; set; }
         
         public DateTime? EndJob { get; set; }
+
+        // TODO: Do not like this :(
+        public User GenerateUser()
+        {
+            User user = new();
+            Type userType = user.GetType();
+            foreach (PropertyInfo property in this.GetType().GetProperties())
+            {
+                PropertyInfo userProperty =  userType.GetProperty(property.Name);
+                if (userProperty != null)
+                    userProperty.SetValue(user, property.GetValue(this));
+            }
+
+            return user;
+        }
 
         public override string ToString()
         {

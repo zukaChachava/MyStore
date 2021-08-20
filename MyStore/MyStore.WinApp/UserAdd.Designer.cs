@@ -102,6 +102,7 @@ namespace MyStore.WinApp
             this.employeeBox.Name = "employeeBox";
             this.employeeBox.Size = new System.Drawing.Size(177, 23);
             this.employeeBox.TabIndex = 6;
+            this.employeeBox.SelectedIndexChanged += new System.EventHandler(this.employeeBox_SelectedIndexChanged);
             // 
             // UserAdd
             // 

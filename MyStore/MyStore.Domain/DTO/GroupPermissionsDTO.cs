@@ -11,7 +11,7 @@ namespace MyStore.Domain.DTO
         [ForeignKey("Permission")]
         public int PermissionCode { get; set; }
         
-        public GroupDTO Group { get; set; }
+        public GroupsDTO Group { get; set; }
         
         public PermissionDTO Permission { get; set; }
     }

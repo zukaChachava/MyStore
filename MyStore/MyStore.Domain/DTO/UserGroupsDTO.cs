@@ -15,6 +15,6 @@ namespace MyStore.Domain.DTO
         public UserDTO User{ get; set; }
         
         [Required]
-        public GroupDTO Group { get; set; }
+        public GroupsDTO Group { get; set; }
     }
 }
