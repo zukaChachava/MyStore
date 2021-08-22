@@ -10,10 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MyStore.Repository.DomainMapper;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 
 namespace MyStore.Repository
 {
-    public abstract class BaseRepository<TModel, TDTO> : IRepository<TModel> where TModel : BaseModel where TDTO : BaseDTO
+    public abstract class BaseRepository<TModel, TDTO> : IRepository<TModel> where TModel : BaseModel, new() where TDTO : BaseDTO, new()
     {
         protected readonly AppDbContext _context;
         protected readonly IMapper _mapper;
@@ -29,6 +33,8 @@ namespace MyStore.Repository
             _userMapper = ModelMapper.GetMapper<User, UserDTO>();
             _dbSet = _context.Set<TDTO>();
         }
+
+        public bool TransactionOpended { get; protected set; }
 
         public virtual TModel Get(int Id)
         {
@@ -69,6 +75,17 @@ namespace MyStore.Repository
             return model;
         }
 
+        public virtual void AddMany(User user, IEnumerable<TModel> models)
+        {
+            if (!HasPermision(user, _repositoryPermission.Add))
+                throw new NotHavePermission("Do not have Add Permission");
+
+            foreach (TModel model in models)
+                _dbSet.Add(_mapper.Map<TDTO>(model));
+
+            _context.SaveChanges();
+        }
+
         public virtual void Update(User user, TModel model)
         {
             if (!HasPermision(user, _repositoryPermission.Update))
@@ -83,8 +100,26 @@ namespace MyStore.Repository
             if (!HasPermision(user, _repositoryPermission.Delete))
                 throw new NotHavePermission("Do not have Delete Permission");
 
-            _dbSet.Remove(_mapper.Map<TDTO>(model));
+            _dbSet.Remove(Get(model));
             _context.SaveChanges();
+        }
+
+        public virtual void BeginTransaction()
+        {
+            _context.Database.BeginTransaction();
+            TransactionOpended = true;
+        }
+
+        public virtual void CommitTransaction()
+        {
+            _context.Database.CommitTransaction();
+            TransactionOpended = false;
+        }
+
+        public virtual void RollbackTransaction()
+        {
+            _context.Database.RollbackTransaction();
+            TransactionOpended = false;
         }
 
         public IEnumerable<int> GetPermissions(User user)

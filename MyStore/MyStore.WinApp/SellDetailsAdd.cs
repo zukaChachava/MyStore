@@ -55,10 +55,10 @@ namespace MyStore.WinApp
 
         private void productBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Model.Product = productBox.SelectedItem as Product;
+            Model.ProductID = (productBox.SelectedItem as Product).ID;
             quantityTxt.Enabled = true;
-            maxQuantityTxt.Text = _repository.GetProductDetails(LocalStorage.User, Model.Product)
-                .Sum(pd => pd.Quantity).ToString();
+            //maxQuantityTxt.Text = _repository.GetProductDetails(LocalStorage.User, Model.Product)
+                //.Sum(pd => pd.Quantity).ToString();
         }
 
         private void quantityTxt_TextChanged(object sender, EventArgs e)

@@ -53,17 +53,14 @@ namespace MyStore.WinApp.Tools
             form.Close();
         }
 
-        public static int DeleteSelectedRow(DataGridView gridView)
+        public static int GetSelectedIndex(DataGridView gridView)
         {
             if (gridView.SelectedRows.Count == 0 || gridView.Rows.Count == 0)
             {
                 FormTools.ShowInfo("Ops", "Choose row to delete");
                 return -1;
             }
-
-            int row = gridView.SelectedRows[0].Index;
-            gridView.Rows.RemoveAt(row);
-            return row;
+            return  gridView.SelectedRows[0].Index;
         }
     }
 }

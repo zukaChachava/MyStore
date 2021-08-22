@@ -32,7 +32,7 @@ namespace MyStore.WinApp
             }
         }
 
-        protected void LoadRelatedData()
+        protected void LoadCategories()
         {
             // TODO: ToArray() Here
             categoryBox.Items.AddRange(_repository.GetCategories(LocalStorage.User).ToArray());
@@ -40,7 +40,7 @@ namespace MyStore.WinApp
 
         private void categoryBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Model.Category = categoryBox.SelectedItem as Category;
+            Model.CategoryID = (categoryBox.SelectedItem as Category).ID;
         }
 
         private void nameTxt_TextChanged(object sender, EventArgs e)
@@ -50,7 +50,24 @@ namespace MyStore.WinApp
 
         private void priceTxt_TextChanged(object sender, EventArgs e)
         {
-            Model.Price = Convert.ToDecimal(priceTxt.Text);
+            try
+            {
+                Model.Price = Convert.ToDecimal(priceTxt.Text);
+            }
+            catch (FormatException)
+            {
+                FormTools.ShowInfo("Ops", "Please input correct format of number !");
+                priceTxt.Text = priceTxt.Text.Substring(0, priceTxt.Text.Length - 1);
+            }
+            catch(Exception ex)
+            {
+                FormTools.ShowError("Ops", ex.Message);
+            }
+        }
+
+        private void ProductAdd_Load(object sender, EventArgs e)
+        {
+            LoadCategories();
         }
     }
 }

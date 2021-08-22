@@ -130,6 +130,7 @@ namespace MyStore.WinApp
             this.Name = "ProductAdd";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add Product";
+            this.Load += new System.EventHandler(this.ProductAdd_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

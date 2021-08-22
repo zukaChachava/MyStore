@@ -20,16 +20,15 @@ namespace MyStore.WinApp
     public partial class OrderAdd : AddForm<Order, OrderRepository>
     {
         protected OrderDetailsRepository _orderDetailsRepository;
-        protected User _user;
-        protected Provider _provider;
-        protected List<OrderDetails> _orderDetails;
+        protected BindingList<OrderDetails> _orderDetails;
 
         public OrderAdd(AppDbContext context) : base(new OrderRepository(context))
         {
             InitializeComponent();
             _orderDetailsRepository = new OrderDetailsRepository(context);
-            _orderDetails = new List<OrderDetails>();
+            _orderDetails = new BindingList<OrderDetails>();
             gridView.ContextMenuStrip = productStrip;
+            gridView.DataSource = _orderDetails;
             LoadProviders();
             LoadUser();
         }
@@ -55,7 +54,34 @@ namespace MyStore.WinApp
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            //
+            //TODO : Remove next line
+            dateBox_ValueChanged(sender, e);
+            
+            try
+            {
+                _repository.BeginTransaction();
+                _repository.Add(LocalStorage.User, Model);
+                GenerateOrderDetailsID(_orderDetails);
+                _orderDetailsRepository.AddMany(LocalStorage.User, _orderDetails);
+                _repository.CommitTransaction();
+                Close();
+            }
+            catch (Exception ex)
+            {
+                if(_repository.TransactionOpended)
+                    _repository.RollbackTransaction();
+                Model.ID = 0;
+                FormTools.ShowError("Ops", ex.Message);
+            }
+        }
+
+        protected void GenerateOrderDetailsID(IEnumerable<OrderDetails> orderDetails)
+        {
+            foreach (OrderDetails orderDetail in orderDetails)
+            {
+                orderDetail.ID = Model.ID;
+                orderDetail.ProvideDate = dateBox.Value;
+            } 
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,7 +91,7 @@ namespace MyStore.WinApp
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int index = FormTools.DeleteSelectedRow(gridView);
+            int index = FormTools.GetSelectedIndex(gridView);
 
             if(index >= 0)
                 _orderDetails.RemoveAt(index);
@@ -73,12 +99,12 @@ namespace MyStore.WinApp
 
         private void providerBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _provider = providerBox.SelectedItem as Provider;
+            Model.ProviderID = (providerBox.SelectedItem as Provider).ID;
         }
 
         private void userBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _user = userBox.SelectedItem as User;
+            Model.UserID = (userBox.SelectedItem as User).ID;
         }
 
         private void dateBox_ValueChanged(object sender, EventArgs e)

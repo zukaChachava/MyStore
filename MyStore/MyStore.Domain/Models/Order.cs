@@ -12,12 +12,6 @@ namespace MyStore.Domain.Models
         public DateTime? OrderDate { get; set; }
         
         public DateTime? RequiredDate { get; set; }
-        
-        public Provider Provider { get; set; }
-        
-        public User User { get; set; }
-
-        public ICollection<OrderDetails> OrderDetails { get; set; }
 
         public override string ToString()
         {

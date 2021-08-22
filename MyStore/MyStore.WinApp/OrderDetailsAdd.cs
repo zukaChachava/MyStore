@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using MyStore.Domain.Models;
@@ -13,9 +14,10 @@ namespace MyStore.WinApp
     public partial class OrderDetailsAdd : Form, IModelForm<OrderDetails>
     {
         protected readonly OrderDetailsRepository _repository;
-        protected List<OrderDetails> _orderDetails;
+        protected BindingList<OrderDetails> _orderDetails;
+        protected Order _order;
 
-        public OrderDetailsAdd(OrderDetailsRepository repository, List<OrderDetails> orderDetails)
+        public OrderDetailsAdd(OrderDetailsRepository repository, BindingList<OrderDetails> orderDetails)
         {
             InitializeComponent();
             sellPriceTxt.Enabled = false;
@@ -34,31 +36,17 @@ namespace MyStore.WinApp
             productBox.Items.AddRange(_repository.GetProducts(LocalStorage.User).ToArray());
         }
 
-        protected void ReadInput()
-        {
-            if (Convert.ToDecimal(priceTxt.Text) > Convert.ToDecimal(sellPriceTxt.Text))
-                throw new Exception("You pay more than it costs");
-
-            OrderDetails model = new()
-            {
-                //ProductId = (productBox.SelectedItem as ComboBoxDetailedItem).Id,
-                Quantity = Convert.ToInt32(quantityTxt.Text),
-                UnitPrice = Convert.ToDecimal(priceTxt.Text),
-                Valid = Convert.ToDateTime(validDate.Text),
-                ProvideDate = DateTime.Now
-            };
-            Model = model;
-        }
-
         private void productBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Model.Product = productBox.SelectedItem as Product;
-            sellPriceTxt.Text = Model.Product.Price.ToString();
+            Model.ProductID = (productBox.SelectedItem as Product).ID;
+            sellPriceTxt.Text = _repository.GetProductPrice(productBox.SelectedItem as Product).ToString();
             priceTxt.Enabled = true;
         }
 
         private void addBtn_Click(object sender, EventArgs e)
         {
+            // TODO: Remove Next line.
+            validDate_ValueChanged(sender, e);
             try
             {
                 if (_orderDetails.Contains(Model))
@@ -76,23 +64,40 @@ namespace MyStore.WinApp
         {
             try
             {
+                if (priceTxt.Text == "")
+                    return;
                 Model.UnitPrice = Convert.ToDecimal(priceTxt.Text);
                 if (Convert.ToDecimal(sellPriceTxt.Text) < Convert.ToDecimal(priceTxt.Text))
                     throw new Exception("Sell price is lower !");
             }
             catch(FormatException)
             {
+                priceTxt.Text = "";
                 FormTools.ShowInfo("Ops", "Wrong numeric format, Pleas write only numbers !");
             }
             catch(Exception ex)
             {
+                priceTxt.Text = "";
                 FormTools.ShowError("Ops", ex.Message);
             }
         }
 
         private void quantityTxt_TextChanged(object sender, EventArgs e)
         {
-            Model.Quantity = Convert.ToInt32(quantityTxt.Text);
+            try
+            {
+                Model.Quantity = Convert.ToInt32(quantityTxt.Text);
+            }
+            catch (FormatException)
+            {
+                quantityTxt.Text = "";
+                FormTools.ShowInfo("Ops", "Wrong numeric format, Pleas write only numbers !");
+            }
+            catch (Exception ex)
+            {
+                quantityTxt.Text = "";
+                FormTools.ShowError("Ops", ex.Message);
+            }
         }
 
         private void validDate_ValueChanged(object sender, EventArgs e)

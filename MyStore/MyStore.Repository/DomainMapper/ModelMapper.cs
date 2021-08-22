@@ -6,13 +6,14 @@ using System.Collections.Generic;
 
 namespace MyStore.Repository.DomainMapper
 {
-    internal static class ModelMapper
+    public static class ModelMapper
     {
         private static IDictionary<Type, IMapper> _mappers;
 
         static ModelMapper()
         {
             _mappers = new Dictionary<Type, IMapper>();
+            // TODO: Run this functions dynamically
             UserMapper();
         }
 
@@ -21,7 +22,8 @@ namespace MyStore.Repository.DomainMapper
             Type type = typeof(TDTO);
             if (!_mappers.Keys.Contains(type))
                 _mappers.Add(type, new MapperConfiguration(cfg =>
-                cfg.CreateMap<TModel, TDTO>().ReverseMap()).CreateMapper());
+                cfg.CreateMap<TModel, TDTO>()
+                .ReverseMap()).CreateMapper());
 
             return _mappers[type];
         }
@@ -30,7 +32,7 @@ namespace MyStore.Repository.DomainMapper
         {
             _mappers.Add(typeof(UserDTO), new MapperConfiguration(cfg =>
                 cfg.CreateMap<User, UserDTO>()
-                .ForSourceMember(u => u.Password, ud => ud.DoNotValidate())
+                .ForSourceMember(u => u.Password, smce => smce.DoNotValidate())
                 .ReverseMap()).CreateMapper());
         }
     }

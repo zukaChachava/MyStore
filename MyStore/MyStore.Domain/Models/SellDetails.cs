@@ -10,13 +10,9 @@ namespace MyStore.Domain.Models
         
         public decimal Discount { get; set; }
 
-        public Sell Sell { get; set; }
-        
-        public Product Product { get; set; }
-
         public override string ToString()
         {
-            return $"{ID} {Product}";
+            return $"{ID} {ProductID}";
         }
     }
 }

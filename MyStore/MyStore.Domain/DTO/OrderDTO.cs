@@ -14,10 +14,9 @@ namespace MyStore.Domain.DTO
         [ForeignKey("User")]
         public int UserID { get; set; }
         
-        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Required]
         public DateTime? OrderDate { get; set; }
         
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? RequiredDate { get; set; }
         
         [Required]

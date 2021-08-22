@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using MyStore.Domain.Models;
+﻿using MyStore.Domain.Models;
 using MyStore.Repository;
 using MyStore.Repository.Context;
 using MyStore.WinApp.BaseForms;
-using MyStore.WinApp.Interfaces;
 using MyStore.WinApp.LocalData;
 using MyStore.WinApp.Tools;
+using System;
+using System.Linq;
 
 namespace MyStore.WinApp
 {
@@ -27,7 +20,7 @@ namespace MyStore.WinApp
         protected override void LoadSelectedModel()
         {
             FormTools.LoadComboBoxID(idBox, Model.ID);
-            categoryBox.SelectedItem = Model.Category;
+            // categoryBox.SelectedItem = Model.CategoryID;
             nameTxt.Text = Model.Name;
             priceTxt.Text = Model.Price.ToString();
         }
@@ -44,7 +37,7 @@ namespace MyStore.WinApp
                 Edit();
                 Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 FormTools.ShowError("Ops", ex.Message);
             }
@@ -57,7 +50,7 @@ namespace MyStore.WinApp
 
         private void categoryBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Model.Category = categoryBox.SelectedItem as Category;
+            Model.CategoryID = (categoryBox.SelectedItem as Category).ID;
         }
 
         private void nameTxt_TextChanged(object sender, EventArgs e)
@@ -71,7 +64,7 @@ namespace MyStore.WinApp
             {
                 Model.Price = Convert.ToDecimal(priceTxt.Text);
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 FormTools.ShowInfo("Ops", "Wrong numeric format !");
                 priceTxt.Text = priceTxt.Text.Substring(0, priceTxt.Text.Length - 1);

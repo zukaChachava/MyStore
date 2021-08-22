@@ -14,13 +14,9 @@ namespace MyStore.Domain.Models
         
         public DateTime? Valid { get; set; }
 
-        public Order Order { get; set; }
-        
-        public Product Product { get; set; }
-
         public override string ToString()
         {
-            return $"{ID} {Product}";
+            return $"{ID} {ProductID}";
         }
     }
 }

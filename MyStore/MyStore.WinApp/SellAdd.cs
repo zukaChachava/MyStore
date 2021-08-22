@@ -64,7 +64,7 @@ namespace MyStore.WinApp
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int index = FormTools.DeleteSelectedRow(gridView);
+            int index = FormTools.GetSelectedIndex(gridView);
 
             if (index >= 0)
                 _sellDetails.RemoveAt(index);
@@ -72,7 +72,7 @@ namespace MyStore.WinApp
 
         private void userBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Model.User = userBox.SelectedItem as User;
+            Model.UserID = (userBox.SelectedItem as User).ID;
         }
 
         private void datePicker_ValueChanged(object sender, EventArgs e)

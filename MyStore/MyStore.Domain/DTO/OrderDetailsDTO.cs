@@ -16,7 +16,7 @@ namespace MyStore.Domain.DTO
         [Required]
         public int Quantity { get; set; }
         
-        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Required]
         public DateTime? ProvideDate { get; set; }
         
         [Required]

@@ -5,6 +5,7 @@ using MyStore.Repository.Tools;
 using MyStore.Repository.Exceptions;
 using System.Collections.Generic;
 using System;
+using MyStore.Repository.DomainMapper;
 
 namespace MyStore.Repository
 {
