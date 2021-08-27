@@ -18,15 +18,16 @@ namespace MyStore.WinApp
     public partial class SellDetailsAdd : Form, IModelForm<SellDetails>
     {
         protected SellDetailsRepository _repository;
-        protected List<SellDetails> _sellDetails;
+        protected BindingList<SellDetails> _sellDetails;
 
-        public SellDetailsAdd(SellDetailsRepository repository, List<SellDetails> sellDetails)
+        public SellDetailsAdd(SellDetailsRepository repository, BindingList<SellDetails> sellDetails)
         {
             InitializeComponent();
             maxQuantityTxt.Enabled = false;
             quantityTxt.Enabled = false;
             _repository = repository;
             _sellDetails = sellDetails;
+            Model = new SellDetails();
             LoadProducts();
         }
 
@@ -57,13 +58,26 @@ namespace MyStore.WinApp
         {
             Model.ProductID = (productBox.SelectedItem as Product).ID;
             quantityTxt.Enabled = true;
-            //maxQuantityTxt.Text = _repository.GetProductDetails(LocalStorage.User, Model.Product)
-                //.Sum(pd => pd.Quantity).ToString();
+            maxQuantityTxt.Text = _repository.GetProductDetails(LocalStorage.User, Model.ProductID)
+                .Sum(pd => pd.Quantity).ToString();
         }
 
         private void quantityTxt_TextChanged(object sender, EventArgs e)
         {
-            Model.Quantity = Convert.ToInt32(quantityTxt.Text);
+            try
+            {
+                if (quantityTxt.Text == "")
+                    return;
+                Model.Quantity = Convert.ToInt32(quantityTxt.Text);
+                if (Model.Quantity > Convert.ToInt32(maxQuantityTxt.Text))
+                        throw new Exception("Not enougth product in storage");
+            }
+            catch(Exception ex)
+            {
+                Model.Quantity = 0;
+                quantityTxt.Text = "";
+                FormTools.ShowError("Ops", ex.Message);
+            }
         }
 
         private void discountTxt_TextChanged(object sender, EventArgs e)

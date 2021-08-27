@@ -24,9 +24,9 @@ namespace MyStore.Repository
             return _productRepository.Value.Select(user);
         }
 
-        public IEnumerable<ProductDetails> GetProductDetails(User user, Product product)
+        public IEnumerable<ProductDetails> GetProductDetails(User user, int productId)
         {
-            return _productDetailsRepository.Value.Select(user, pd => pd.Product == product);
+            return _productDetailsRepository.Value.Select(user, pd => pd.ID == productId);
         }
     }
 }

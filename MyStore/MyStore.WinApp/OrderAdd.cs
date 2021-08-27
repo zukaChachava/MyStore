@@ -20,12 +20,14 @@ namespace MyStore.WinApp
     public partial class OrderAdd : AddForm<Order, OrderRepository>
     {
         protected OrderDetailsRepository _orderDetailsRepository;
+        protected ProductDetailsRepository _productDetailsRepository;
         protected BindingList<OrderDetails> _orderDetails;
 
         public OrderAdd(AppDbContext context) : base(new OrderRepository(context))
         {
             InitializeComponent();
             _orderDetailsRepository = new OrderDetailsRepository(context);
+            _productDetailsRepository = new ProductDetailsRepository(context);
             _orderDetails = new BindingList<OrderDetails>();
             gridView.ContextMenuStrip = productStrip;
             gridView.DataSource = _orderDetails;
@@ -61,8 +63,9 @@ namespace MyStore.WinApp
             {
                 _repository.BeginTransaction();
                 _repository.Add(LocalStorage.User, Model);
-                GenerateOrderDetailsID(_orderDetails);
+                GenerateOrderDetailsID();
                 _orderDetailsRepository.AddMany(LocalStorage.User, _orderDetails);
+                _productDetailsRepository.AddMany(LocalStorage.User, GenerateProductDetails(_orderDetails));
                 _repository.CommitTransaction();
                 Close();
             }
@@ -75,13 +78,21 @@ namespace MyStore.WinApp
             }
         }
 
-        protected void GenerateOrderDetailsID(IEnumerable<OrderDetails> orderDetails)
+        protected void GenerateOrderDetailsID()
         {
-            foreach (OrderDetails orderDetail in orderDetails)
+            foreach (OrderDetails orderDetail in _orderDetails)
             {
                 orderDetail.ID = Model.ID;
                 orderDetail.ProvideDate = dateBox.Value;
             } 
+        }
+
+        protected IEnumerable<ProductDetails> GenerateProductDetails(IEnumerable<OrderDetails> orderDetails)
+        {
+            foreach (OrderDetails orderDetail in orderDetails)
+            {
+                yield return new ProductDetails() { ID = orderDetail.ProductID, Quantity = orderDetail.Quantity, Valid = orderDetail.Valid };
+            }
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)

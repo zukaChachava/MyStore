@@ -73,11 +73,13 @@ namespace MyStore.WinApp
             catch(FormatException)
             {
                 priceTxt.Text = "";
+                Model.UnitPrice = null;
                 FormTools.ShowInfo("Ops", "Wrong numeric format, Pleas write only numbers !");
             }
             catch(Exception ex)
             {
                 priceTxt.Text = "";
+                Model.UnitPrice = null;
                 FormTools.ShowError("Ops", ex.Message);
             }
         }
