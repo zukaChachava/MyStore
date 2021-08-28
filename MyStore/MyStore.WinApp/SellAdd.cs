@@ -23,7 +23,10 @@ namespace MyStore.WinApp
             InitializeComponent();
             _sellDetailsRepository = new SellDetailsRepository(context);
             _sellDetails = new BindingList<SellDetails>();
+            _productDetailsRepository = new ProductDetailsRepository(context);
             gridView.ContextMenuStrip = productStrip;
+            gridView.DataSource = _sellDetails;
+            LoadUser();
         }
 
         private void addProductBtn_Click(object sender, EventArgs e)
@@ -34,13 +37,15 @@ namespace MyStore.WinApp
 
         private void addBtn_Click(object sender, EventArgs e)
         {
+            // TODO: Remove next line !
+            Model.SellDate = datePicker.Value;
             try
             {
                 _repository.BeginTransaction();
                 _repository.Add(LocalStorage.User, Model);
                 GenerateSellDetails();
                 _sellDetailsRepository.AddMany(LocalStorage.User, _sellDetails);
-                _productDetailsRepository.
+                _productDetailsRepository.SellProducts(GenerateProductDetails());
                 _repository.CommitTransaction();
                 Close();
             }
@@ -57,6 +62,17 @@ namespace MyStore.WinApp
         {
             foreach (SellDetails selldetail in _sellDetails)
                 selldetail.ID = Model.ID;
+        }
+
+        private void LoadUser()
+        {
+            FormTools.LoadComboBoxID<User>(userBox, LocalStorage.User);
+        }
+
+        protected IEnumerable<ProductDetails> GenerateProductDetails()
+        {
+            foreach (SellDetails sellDetail in _sellDetails)
+                yield return new ProductDetails() { ID = sellDetail.ProductID, Quantity = sellDetail.Quantity };            
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
